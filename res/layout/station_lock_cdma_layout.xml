@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/station_cdma"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/line_height"
+    android:background="@drawable/rectangle_background_white"
+    android:orientation="vertical"
+    android:visibility="gone" >
+    
+    <LinearLayout android:layout_width="match_parent"
+	    android:layout_height="@dimen/line_height"
+	    android:gravity="center_vertical"
+	    android:paddingLeft="4dip"
+	    android:paddingRight="4dip">
+	    
+	      <TextView android:layout_width="0dp"
+	          android:layout_height="wrap_content"
+	          android:layout_weight="2"
+	          android:text="@string/station_bsd" />
+	      <EditText android:id="@+id/station_bsd"
+	          android:layout_width="0dp"
+	          android:layout_height="match_parent"
+	          android:layout_weight="8"
+	          android:layout_marginTop="4dip"
+	          android:layout_marginBottom="4dip"
+	          android:paddingLeft="4dip"
+	          android:background="@drawable/button_background_white"
+	          android:hint="@string/station_bsd_hint"
+	          android:textSize="12sp"
+	          android:textColor="@color/text_color_dark_grey"
+	          android:inputType="number"
+	          android:gravity="center_vertical"
+	          android:textCursorDrawable="@null"
+	           />
+	</LinearLayout>
+    
+    <include layout="@layout/line_seperator"/>
+    
+    <LinearLayout android:layout_width="match_parent"
+	    android:layout_height="@dimen/line_height"
+	    android:gravity="center_vertical"
+	    android:paddingLeft="4dip"
+	    android:paddingRight="4dip">
+	    
+	      <TextView android:layout_width="0dp"
+	          android:layout_height="wrap_content"
+	          android:layout_weight="2"
+	          android:text="@string/station_sid" />
+	      <EditText android:id="@+id/station_sid"
+	          android:layout_width="0dp"
+	          android:layout_height="match_parent"
+	          android:layout_weight="8"
+	          android:layout_marginTop="4dip"
+	          android:layout_marginBottom="4dip"
+	          android:paddingLeft="4dip"
+	          android:background="@drawable/button_background_white"
+	          android:hint="@string/station_sid_hint"
+	          android:textSize="12sp"
+	          android:textColor="@color/text_color_grey"
+	          android:inputType="number"
+	          android:gravity="center_vertical"
+	          android:textCursorDrawable="@null"
+	           />
+	</LinearLayout>
+    
+    <include layout="@layout/line_seperator"/>
+    
+    <LinearLayout android:layout_width="match_parent"
+		android:layout_height="@dimen/line_height"
+		android:gravity="center_vertical"
+		android:paddingLeft="4dip"
+	    android:paddingRight="4dip" >
+	      
+		<TextView android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="2"
+			android:text="@string/station_nid" />
+		<EditText android:id="@+id/station_nid"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_weight="8"
+			android:layout_marginTop="4dip"
+			android:layout_marginBottom="4dip"
+			android:paddingLeft="4dip"
+			android:background="@drawable/button_background_white"
+			android:hint="@string/station_nid_hint"
+			android:textSize="12sp"
+			android:textColor="@color/text_color_grey"
+			android:inputType="number"
+			android:gravity="center_vertical"
+	        android:textCursorDrawable="@null" />
+	</LinearLayout>
+	            
+</LinearLayout>

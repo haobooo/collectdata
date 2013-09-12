@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">基站统计</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+
+    <string name="bs_collectdata_title">基站采集</string>
+    <string name="bs_coolectdata_desc">进行基站数据的采集，显示，存储</string>
+    <string name="bs_looptest_title">基站路测</string>
+    <string name="bs_looptest_desc">把移动过程中采集到的基站数据保存起来</string>
+    <string name="bs_lock_and_alarm_title">基站锁定</string>
+    <string name="bs_lock_and_alarm_desc">设定要锁定的基站，在进入/离开该基站时提示用户</string>
+    <string name="bs_file_manager_title">数据管理</string>
+    <string name="bs_file_manager_desc">管理基站采集中保存的数据</string>
+    <string name="bs_search_title">基站查询</string>
+    <string name="bs_search_desc">查询基站所在位置</string>
+    <string name="bs_navigation_title">基站导航</string>
+    <string name="bs_navigation_desc">通过导航提供基站路径</string>
+    <string name="bs_location_search_title">经纬度查询</string>
+    <string name="bs_location_search_desc">查询经纬度</string>
+    <string name="bs_help_title">使用帮助</string>
+    <string name="bs_help_desc">有问题我帮你</string>
+    
+    <string name="collectdata_save">保存</string>
+    <string name="phone_operator">运营商：</string>
+    <string name="phone_type">网络类型：</string>
+    <string name="current_cell">当前小区：</string>
+    <string name="cell_location">大区：%1$d； 小区：%2$d；强度：%3$d</string>
+    <string name="cell_location_brief">(%1$d, %2$d)</string>
+    <string name="cell_location_looptest">大区：%1$d； 小区：%2$d；强度：%3$d；经度：%4$s；维度：%5$s</string>
+    <string name="cell_location_cdma">基站：%1$d； 系统：%2$d；网络：%3$d；强度：%4$d</string>
+    <string name="cell_location_cdma_looptest">基站：%1$d； 系统：%2$d；网络：%3$d；经度：%4$s；维度：%5$s</string>
+    <string name="cell_location_cdma_brief">(%1$d, %2$d, %3$d)</string>
+    <string name="phone_type_none">未知网络类型</string>
+    <string name="phone_type_gsm">GSM</string>
+    <string name="phone_type_cdma">CDMA</string>
+    <string name="phone_type_sip">SIP</string>
+    <string name="looptest_longtitude">经度</string>
+    <string name="looptest_lantitude">纬度</string>
+    
+    <string name="station_lac">大区：</string>
+    <string name="station_lac_hint">输入大区号段</string>
+    <string name="station_cid">小区：</string>
+    <string name="station_cid_hint">输入小区号段</string>
+    <string name="station_bsd">基站：</string>
+    <string name="station_bsd_hint">输入基站编号</string>
+    <string name="station_sid">系统：</string>
+    <string name="station_sid_hint">输入系统编号</string>
+    <string name="station_nid">网络：</string>
+    <string name="station_nid_hint">输入网络编号</string>
+    <string name="station_lock_in">进入告警</string>
+    <string name="station_lock_out">退出告警</string>
+    <string name="station_add_lock">添加到锁定列表</string>
+    
+    <string name="station_lock_start_service">基站锁定服务可以在监测到进入或者离开设定的基站时给出告警</string>
+    <string name="station_lock_stop_service">停止基站锁定监测服务？</string>
+    <string name="start">启动</string>
+    <string name="stop">停止</string>
+    <string name="cancel">取消</string>
+    <string name="station_lock_in_alarm">进入基站(%1$s)</string>
+    <string name="station_lock_out_alarm">离开基站(%1$s)</string>
+    
+    <string name="save_data_title">保存采集数据</string>
+    <string name="save_data_prompt">请输入文件名，如果不输入的话系统会按系统时间自动命名</string>
+    <string name="file_name_hint">点击这里输入</string>
+    <string name="save">保存</string>
+    
+    <string name="file_manager">数据管理</string>
+    <string name="select_file">...</string>
+    <string name="open">打开</string>
+    <string name="detail">详情</string>
+    <string name="delete">删除</string>
+    <string name="delete_all">清空</string>
+    <string name="select_file_title">选择文件</string>
+    <string name="empty_prompt">没有文件可供选择</string>
+    
+    <string name="loc_and_show_map">定位并显示地图</string>
+    <string name="loc_and_map_title">当前位置</string>
+    <string name="decimal">十进制</string>
+    <string name="hexadecimal">十六进制</string>
+    <string name="station_lock_alarm_vibrate">震动提醒</string>
+    <string name="station_lock_alarm_ring">声音提醒</string>
+    
+</resources>

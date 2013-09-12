@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" 
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <LinearLayout android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:paddingLeft="8dip"
+        android:paddingRight="8dip"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+        
+        <ImageView android:id="@+id/title_left_button"
+	        android:layout_width="@dimen/title_icon_width"
+	        android:layout_height="@dimen/title_icon_height"
+	        android:layout_alignParentLeft="true"
+	        android:layout_centerVertical="true"
+	        android:onClick="onBack"
+	        android:scaleType="fitStart"
+	        android:src="@drawable/ic_back" />
+        
+        <TextView android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/bs_collectdata_title"
+            style="@style/title_style" />
+        
+        <TextView android:id="@+id/title_right_button"
+            android:layout_width="@dimen/title_icon_width"
+            android:layout_height="@dimen/title_icon_height"
+            android:text="@string/collectdata_save"
+            style="@style/button_blue_style"
+            android:onClick="onSaveFile"
+            />
+    </LinearLayout>
+    
+    <include layout="@layout/line_seperator" />
+    
+    <LinearLayout android:id="@+android:id/content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:orientation="vertical" >
+        
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rectangle_background_white"
+            android:orientation="vertical" >
+            
+            <LinearLayout android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+	            <LinearLayout android:layout_width="0dip"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:minHeight="@dimen/line_height"
+	                android:gravity="center_vertical"
+	                android:paddingLeft="4dip">
+	                
+	                  <TextView android:layout_width="wrap_content"
+	                      android:layout_height="wrap_content"
+	                      android:text="@string/phone_operator" />
+	                  <TextView android:id="@+id/phone_operator"
+	                      android:layout_width="wrap_content"
+	                      android:layout_height="wrap_content"
+	                       />
+	            </LinearLayout>
+	            
+	            <include layout="@layout/vertical_line"/>
+	            
+				<LinearLayout android:layout_width="0dip"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:minHeight="@dimen/line_height"
+	                android:gravity="center_vertical"
+	                android:paddingLeft="4dip">
+	                
+	                  <TextView android:layout_width="wrap_content"
+	                      android:layout_height="wrap_content"
+	                      android:text="@string/phone_type" />
+	                  <TextView android:id="@+id/phone_type"
+	                      android:layout_width="wrap_content"
+	                      android:layout_height="wrap_content"
+	                       />
+	            </LinearLayout>
+            </LinearLayout>
+            
+            <include layout="@layout/line_seperator"/>
+            
+            <!-- celllocation. -->
+            <RelativeLayout android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dip"
+                android:minHeight="@dimen/line_height"
+                android:paddingLeft="4dip">
+				<TextView android:id="@+id/current_cell"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:text="@string/current_cell" />
+				<TextView android:id="@+id/cell_info"
+				    android:layout_below="@+id/current_cell"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content" />"
+			</RelativeLayout>
+			
+        </LinearLayout>
+        
+        <ListView android:id="@+android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1"
+            android:layout_marginTop="6dip"
+            android:background="@drawable/rectangle_background_white"
+            android:divider="@drawable/line_seperator" />
+    </LinearLayout>
+    
+    <!-- Toobar. -->
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="@dimen/line_height"
+        android:layout_margin="8dp"
+        android:gravity="center">
+        
+        <Button android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/loc_and_show_map"
+            style="@style/button_blue_style"
+            android:onClick="showMap"/>
+    </LinearLayout>
+</LinearLayout>

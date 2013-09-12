@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<resources>
+    <color name="windown_background">#FFF6F6F6</color>
+    <color name="title_delimiter_color">#FFD5D5D5</color>
+    
+	<!-- Normal color -->
+	<color name="black">#FF000000</color>
+	<color name="white">#FFFFFFFF</color>
+	<color name="grey">#FFDFDFDF</color>
+	<color name="blue">#FF64B8FF</color>
+	<color name="orange">#FFFF9000</color>
+	<color name="red">#FFFC5A5E</color>
+	<color name="green">#FF93C542</color>
+
+	<!-- Text colors -->
+    <color name="text_color_black">#FF333333</color>
+    <color name="text_color_dark_grey">#FF666666</color>
+    <color name="text_color_grey">#FF999999</color>
+    <color name="text_color_red">#FFFC4540</color>
+    <color name="text_color_orange">#FFFF9000</color>
+    
+</resources>

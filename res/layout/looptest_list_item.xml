@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rectangle_background_white"
+    android:orientation="vertical" >
+    
+    <LinearLayout android:id="@+id/station_gsm"
+        android:layout_width="match_parent"
+	    android:layout_height="@dimen/line_height"
+	    android:paddingLeft="4dip"
+	    android:paddingRight="4dip"
+	    android:gravity="center_vertical">
+	    
+	      <TextView android:layout_width="wrap_content"
+	          android:layout_height="wrap_content"
+	          android:text="@string/station_lac" />
+	      <TextView android:id="@+id/station_lac"
+	          android:layout_width="0dp"
+	          android:layout_height="match_parent"
+	          android:layout_weight="1"
+	          android:paddingLeft="4dip"
+	          android:textSize="12sp"
+	          android:textColor="@color/text_color_dark_grey"
+	          android:gravity="center_vertical" />
+	      
+	      <TextView android:layout_width="wrap_content"
+	          android:layout_height="wrap_content"
+	          android:text="@string/station_cid" />
+	      <TextView android:id="@+id/station_cid"
+	          android:layout_width="0dp"
+	          android:layout_height="match_parent"
+	          android:layout_weight="1"
+	          android:paddingLeft="4dip"
+	          android:textSize="12sp"
+	          android:textColor="@color/text_color_dark_grey"
+	          android:gravity="center_vertical"
+	           />
+	</LinearLayout>
+	
+    <LinearLayout android:id="@+id/station_cdma"
+        android:layout_width="match_parent"
+		android:layout_height="@dimen/line_height"
+	    android:paddingLeft="4dip"
+	    android:paddingRight="4dip"
+	    android:gravity="center_vertical"
+	    android:visibility="gone"
+	    android:background="@drawable/round_rectangle_top_background_orange"
+	    android:orientation="vertical">
+
+        <TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/station_bsd" />
+		<TextView android:id="@+id/station_bsd"
+		    android:layout_width="0dp"
+		    android:layout_height="match_parent"
+		    android:layout_weight="1"
+		    android:paddingLeft="4dip"
+		    android:textSize="12sp"
+		    android:textColor="@color/text_color_dark_grey"
+		    android:gravity="center_vertical" />
+		
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/station_sid" />
+		<TextView android:id="@+id/station_sid"
+		    android:layout_width="0dp"
+		    android:layout_height="match_parent"
+		    android:layout_weight="1"
+		    android:paddingLeft="4dip"
+		    android:textSize="12sp"
+		    android:textColor="@color/text_color_dark_grey"
+		    android:gravity="center_vertical" />
+		
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/station_nid" />
+		<TextView android:id="@+id/station_nid"
+		    android:layout_width="0dp"
+		    android:layout_height="match_parent"
+		    android:layout_weight="1"
+		    android:paddingLeft="4dip"
+		    android:textSize="12sp"
+		    android:textColor="@color/text_color_dark_grey"
+		    android:gravity="center_vertical" />
+		
+    </LinearLayout>
+    
+    <include layout="@layout/line_seperator"/>
+    
+    <LinearLayout android:id="@+id/station_location"
+        android:layout_width="match_parent"
+	    android:layout_height="@dimen/line_height"
+	    android:paddingLeft="4dip"
+	    android:paddingRight="4dip"
+	    android:gravity="center_vertical" >
+	    
+	      <TextView android:layout_width="wrap_content"
+	          android:layout_height="wrap_content"
+	          android:text="@string/looptest_longtitude" />
+	      <TextView android:id="@+id/looptest_longtitude"
+	          android:layout_width="0dp"
+	          android:layout_height="match_parent"
+	          android:layout_weight="1"
+	          android:paddingLeft="4dip"
+	          android:textSize="12sp"
+	          android:textColor="@color/text_color_dark_grey"
+	          android:gravity="center_vertical" />
+	      
+	      <TextView android:layout_width="wrap_content"
+	          android:layout_height="wrap_content"
+	          android:text="@string/looptest_lantitude" />
+	      <TextView android:id="@+id/looptest_lantitude"
+	          android:layout_width="0dp"
+	          android:layout_height="match_parent"
+	          android:layout_weight="1"
+	          android:paddingLeft="4dip"
+	          android:textSize="12sp"
+	          android:textColor="@color/text_color_dark_grey"
+	          android:gravity="center_vertical"
+	           />
+	</LinearLayout>
+	
+    <include layout="@layout/line_seperator"/>
+    
+    <TextView android:id="@+id/time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="8dp"
+        android:gravity="center_vertical|right"
+	    android:textSize="12sp"
+	    android:background="@color/grey"/>
+	
+</LinearLayout>

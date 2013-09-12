@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="8dip"
+    android:background="@color/windown_background"
+     >
+    <TextView android:layout_width="match_parent"
+        android:layout_height="@dimen/line_height"
+        android:text="@string/save_data_title"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:background="@color/white" />
+    
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dip"
+        android:layout_marginLeft="8dip"
+        android:layout_marginRight="8dip"
+        android:text="@string/save_data_prompt"
+        android:textSize="18sp"/>
+    
+    <EditText android:id="@+id/file_name_edit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_height"
+        android:layout_marginTop="8dip"
+        android:layout_marginLeft="8dip"
+        android:layout_marginRight="8dip"
+        android:paddingLeft="4dip"
+        android:background="@drawable/rectangle_background_white"
+        android:hint="@string/file_name_hint"
+        android:textColorHint="@color/text_color_grey" />
+    
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/line_height"
+        android:layout_marginLeft="8dip"
+        android:layout_marginRight="8dip"
+        android:layout_marginTop="8dip" >
+        
+        <Button android:id="@+id/save"
+            android:layout_width="0dip"
+            android:layout_height="@dimen/line_height"
+            android:layout_weight="1"
+            android:text="@string/save"
+            style="@style/button_blue_style"/>
+        
+        <Button android:id="@+id/cancel"
+            android:layout_width="0dip"
+            android:layout_height="@dimen/line_height"
+            android:layout_weight="1"
+            android:layout_marginLeft="4dip"
+            android:text="@string/cancel"
+            style="@style/button_blue_style"/>
+    </LinearLayout>
+</LinearLayout>

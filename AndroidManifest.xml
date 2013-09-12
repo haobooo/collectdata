@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- HISTORY:
+1.0.17:
+基站采集：
+	采集列表颜色会发生混乱的问题修复
+	采集列表显示的小区ID如果是WCDMA网络则只显示后32位
+	基站路测列表项底色显示重复的问题修复
+1.0.16:
+基站采集：
+	无法持续收到小区位置更新信息问题解决。
+基站路测：
+	修改标题显示错误
+	修改列表边距问题
+1.0.15:
+基站路测：
+	修改字体颜色
+	增加运营商和手机类型
+	去掉信号强度
+	修改列表显示样式
+1.0.14:
+基站锁定：
+	支持10进制和16进制两种输入方式
+	支持振动提示和声音提示
+	修改界面，把添加界面和列表界面分开
+	列表不再显示信号强度
+1.0.13:
+主界面：
+	增加了另外四个模块的入口
+1.0.12:
+数据采集模块：
+	增加了信号强度的采集。
+	增加了定位和地图显示。
+1.0.11:
+数据采集模块：
+	修改了所有应用的字体颜色为text_color_black.
+	显示正确的运营商和手机类型
+	数据采集列表进一步优化
+1.0.10 Add proguard.cfg and modify project.properties.
+ -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.pipi.workhouse.telephony"
+    android:versionCode="17"
+    android:versionName="1.0.17" >
+
+    <uses-sdk
+        android:minSdkVersion="7"
+        android:targetSdkVersion="17" />
+	
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="false"
+        android:resizeable="true"
+        android:smallScreens="true" />
+    
+    <uses-permission android:name="android.permission.VIBRATE" />
+    
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+	<uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
+	<uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"></uses-permission>
+	<uses-permission android:name="android.permission.READ_LOGS"></uses-permission>
+	<uses-permission android:name="android.permission.READ_PHONE_STATE" />  
+	<uses-permission android:name="android.permission.CALL_PHONE" />  
+	
+    <application
+        android:allowBackup="true"
+        android:name=".common.MyApplication"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".activity.MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <activity android:name=".activity.CollectionData" />
+        <activity android:name=".activity.StationLock" />
+        <activity android:name=".activity.FileManager" />
+        <activity android:name=".activity.SelectFileActivity" />
+        <activity android:name=".activity.LoopTest"/>
+        <activity android:name=".activity.MapActivity"
+            android:label="@string/loc_and_map_title" />
+        
+        <service android:name=".service.StationLockService" />
+        
+        <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote" />
+            
+    </application>
+
+</manifest>

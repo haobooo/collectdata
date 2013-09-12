@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/station_gsm"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/line_height"
+    android:background="@drawable/rectangle_background_white"
+    android:orientation="vertical" >
+    
+    <LinearLayout android:layout_width="match_parent"
+	    android:layout_height="@dimen/line_height"
+	    android:paddingLeft="4dip"
+	    android:paddingRight="4dip"
+	    android:gravity="center_vertical">
+	    
+	      <TextView android:layout_width="0dp"
+	          android:layout_height="wrap_content"
+	          android:layout_weight="2"
+	          android:text="@string/station_lac" />
+	      <EditText android:id="@+id/station_lac"
+	          android:layout_width="0dp"
+	          android:layout_height="match_parent"
+	          android:layout_weight="8"
+	          android:paddingLeft="4dip"
+	          android:layout_marginTop="4dip"
+	          android:layout_marginBottom="4dip"
+	          android:hint="@string/station_lac_hint"
+	          android:textSize="12sp"
+	          android:textColor="@color/text_color_dark_grey"
+	          android:gravity="center_vertical"
+	          android:textCursorDrawable="@null"
+	          android:background="@drawable/button_background_white" />
+	</LinearLayout>
+    
+    <include layout="@layout/line_seperator"/>
+    
+    <LinearLayout android:layout_width="match_parent"
+	    android:layout_height="@dimen/line_height"
+	    android:paddingLeft="4dip"
+	    android:paddingRight="4dip"
+	    android:gravity="center_vertical">
+	    
+	      <TextView android:layout_width="0dp"
+	          android:layout_height="wrap_content"
+	          android:layout_weight="2"
+	          android:text="@string/station_cid" />
+	      <EditText android:id="@+id/station_cid"
+	          android:layout_width="0dp"
+	          android:layout_height="match_parent"
+	          android:layout_weight="8"
+	          android:paddingLeft="4dip"
+	          android:layout_marginTop="4dip"
+	          android:layout_marginBottom="4dip"
+	          android:hint="@string/station_cid_hint"
+	          android:textSize="12sp"
+	          android:textColor="@color/text_color_dark_grey"
+	          android:gravity="center_vertical"
+	          android:inputType="number"
+	          android:textCursorDrawable="@null"
+	          android:background="@drawable/button_background_white"
+	           />
+	</LinearLayout>
+	            
+</LinearLayout>

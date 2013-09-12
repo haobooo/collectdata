@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical" >
+    
+    <LinearLayout android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:paddingLeft="8dip"
+        android:paddingRight="8dip"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+        
+        <ImageView android:id="@+id/title_left_button"
+	        android:layout_width="@dimen/title_icon_width"
+	        android:layout_height="@dimen/title_icon_height"
+	        android:layout_alignParentLeft="true"
+	        android:layout_centerVertical="true"
+	        android:onClick="onBack"
+	        android:scaleType="fitStart"
+	        android:src="@drawable/ic_back" />
+        
+        <TextView android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/file_manager"
+            style="@style/title_style" />
+        
+        <TextView android:id="@+id/title_right_button"
+            android:layout_width="@dimen/title_icon_width"
+            android:layout_height="@dimen/title_icon_height"
+            />
+    </LinearLayout>
+    
+    <include layout="@layout/line_seperator" />
+    
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="@dimen/line_height"
+        android:layout_marginTop="8dip"
+        android:paddingLeft="8dip"
+        android:paddingRight="8dip">
+        
+        <TextView android:id="@+id/file_name"
+            android:layout_width="0dip"
+            android:layout_height="@dimen/line_height"
+            android:layout_weight="1"
+            android:layout_marginRight="8dip"
+            android:background="@drawable/rectangle_background_white"/>
+        
+        <Button android:id="@+id/select" 
+            android:layout_width="60dip"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:text="@string/select_file"
+            style="@style/button_green_style"
+            android:onClick="btnHandle"/>
+    </LinearLayout>
+    
+    <ListView android:id="@+android:id/list"
+	    android:layout_width="match_parent"
+	    android:layout_height="0dip"
+	    android:layout_weight="1"
+	    android:layout_marginTop="6dip"
+	    android:layout_marginLeft="8dip"
+	    android:layout_marginRight="8dip"
+	    android:paddingLeft="4dip"
+	    android:paddingRight="4dip"
+	    android:background="@drawable/rectangle_background_white"
+	    android:divider="@drawable/line_seperator" />
+    
+    <include layout="@layout/line_seperator" />
+    
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/line_height"
+        android:layout_marginTop="8dip"
+        android:layout_marginBottom="2dip"
+        android:paddingLeft="8dip"
+        android:paddingRight="8dip">
+        
+        <Button android:id="@+id/open"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/open"
+            style="@style/button_green_style"
+            android:onClick="btnHandle"/>
+        
+        <Button android:id="@+id/detail"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="4dip"
+            android:text="@string/detail"
+            style="@style/button_green_style"
+            android:onClick="btnHandle"/>
+        
+        <Button android:id="@+id/delete"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="4dip"
+            android:text="@string/delete"
+            style="@style/button_green_style"
+            android:onClick="btnHandle"/>
+        
+        <Button android:id="@+id/delete_all"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="4dip"
+            android:text="@string/delete_all"
+            style="@style/button_green_style"
+            android:onClick="btnHandle"/>
+
+    </LinearLayout>
+</LinearLayout>

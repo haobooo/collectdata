@@ -1,0 +1,197 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity"
+    android:background="#FF333333" >
+
+    <LinearLayout 
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:orientation="vertical">
+        
+        <LinearLayout android:id="@+id/bs_collectdata"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="4"
+            android:padding="4dip"
+            android:background="@color/blue"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:onClick="goNext" >
+            
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bs_collectdata_title"
+                style="@style/text_title_style"/>
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bs_coolectdata_desc"
+                style="@style/text_desc_style" />"
+        </LinearLayout>
+        
+        <LinearLayout android:id="@+id/bs_looptest"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="4"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:padding="4dip"
+            android:background="@color/red"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:onClick="goNext" >
+            
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bs_looptest_title"
+                style="@style/text_title_style"/>
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bs_looptest_desc"
+                style="@style/text_desc_style" />
+        </LinearLayout>
+        
+        <LinearLayout android:id="@+id/bs_search"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="2"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:padding="4dip"
+            android:background="#ff02bb62"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:onClick="goNext" >
+            
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bs_search_title"
+                style="@style/text_title_style"/>
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bs_search_desc"
+                style="@style/text_desc_style" />
+        </LinearLayout>
+        
+        <LinearLayout android:id="@+id/bs_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="4"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:padding="4dip"
+            android:background="#ff7600cc"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:onClick="goNext" >
+            
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bs_navigation_title"
+                style="@style/text_title_style"/>
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bs_navigation_desc"
+                style="@style/text_desc_style" />
+        </LinearLayout>
+        
+    </LinearLayout>
+
+    <LinearLayout 
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        
+        <LinearLayout android:id="@+id/bs_lock_and_alarm"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="4"
+            android:padding="4dip"
+            android:background="@color/orange"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:onClick="goNext" >
+            
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bs_lock_and_alarm_title"
+                style="@style/text_title_style"/>
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bs_lock_and_alarm_desc"
+                style="@style/text_desc_style" />
+            
+        </LinearLayout>
+        
+        <LinearLayout android:id="@+id/bs_file_manager"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="4"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:padding="4dip"
+            android:background="@color/green"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:onClick="goNext" >
+            
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bs_file_manager_title"
+                style="@style/text_title_style"/>
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bs_file_manager_desc"
+                style="@style/text_desc_style" />
+            
+        </LinearLayout>
+        
+        <LinearLayout android:id="@+id/bs_location_search"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="4"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:padding="4dip"
+            android:background="#FF8f98f9"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:onClick="goNext" >
+            
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bs_location_search_title"
+                style="@style/text_title_style"/>
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bs_location_search_desc"
+                style="@style/text_desc_style" />
+            
+        </LinearLayout>
+        
+        <LinearLayout android:id="@+id/bs_help"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="2"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:padding="4dip"
+            android:background="#FF77aa90"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:onClick="goNext" >
+            
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bs_help_title"
+                style="@style/text_title_style"/>
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bs_help_desc"
+                style="@style/text_desc_style" />
+            
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
