@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- HISTORY:
+1.0.18:
+	基站采集列表重复项只显示一条
 1.0.17:
 基站采集：
 	采集列表颜色会发生混乱的问题修复
@@ -39,8 +41,8 @@
  -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.pipi.workhouse.telephony"
-    android:versionCode="17"
-    android:versionName="1.0.17" >
+    android:versionCode="18"
+    android:versionName="1.0.18" >
 
     <uses-sdk
         android:minSdkVersion="7"
