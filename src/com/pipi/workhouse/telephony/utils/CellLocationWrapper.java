@@ -1,5 +1,7 @@
 package com.pipi.workhouse.telephony.utils;
 
+import com.pipi.workhouse.telephony.common.Constants;
+
 import android.telephony.CellLocation;
 import android.telephony.cdma.CdmaCellLocation;
 import android.telephony.gsm.GsmCellLocation;
@@ -118,5 +120,18 @@ public class CellLocationWrapper extends CellLocation {
 	
 	public double getLatitude() {
 		return mLatitude;
+	}
+	
+	@Override
+	public String toString() {
+		String key = "";
+		
+		if (isGsm()) {
+			key = getLac() + Constants.DATA_SEPERATOR + getCid();
+		} else {
+			key = getBaseStationId() + Constants.DATA_SEPERATOR + getSystemId() + Constants.DATA_SEPERATOR + getNetworkId();
+		}
+		
+		return key;
 	}
 }

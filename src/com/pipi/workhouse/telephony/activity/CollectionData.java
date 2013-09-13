@@ -2,6 +2,7 @@ package com.pipi.workhouse.telephony.activity;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -64,6 +65,9 @@ public class CollectionData extends Activity {
 	private double longitude;
 	private double latitude;
 	public LocationClient mLocationClient = null;
+	
+	private ArrayList<CellLocation> mCollectCell = new ArrayList<CellLocation>();
+	private String cellKey = "";
 	
 	private PhoneStateListener mPhoneStateListener = new PhoneStateListener() {
 
@@ -178,7 +182,14 @@ public class CollectionData extends Activity {
 		CellLocationWrapper locWrap = new CellLocationWrapper(location);
 		locWrap.setSignalStrength(getSignalStrength());
 		
-		mAdapter.addItem(locWrap);
+		mCollectCell.add(locWrap);
+		
+		if (!cellKey.contains(locWrap.toString())) {
+			mAdapter.addItem(locWrap);
+			cellKey = cellKey + ";" + locWrap.toString();
+		} else {
+			((MyLocationAdapter)mAdapter).findAndReplace(locWrap);
+		}
 		
 		mLastLocation = location;
 	}
@@ -275,9 +286,9 @@ public class CollectionData extends Activity {
 		StringBuilder detailBuilder = new StringBuilder();
 		StringBuilder briefBuilder = new StringBuilder();
 		
-		int size = mAdapter.getCount();
+		int size = mCollectCell.size();
 		for (int i = 0; i < size; i++) {
-			CellLocationWrapper location = (CellLocationWrapper) mAdapter.getItem(i);
+			CellLocationWrapper location = (CellLocationWrapper) mCollectCell.get(i);
 			
 			if (location.isGsm()) {
 				key = location.getLac() + Constants.DATA_SEPERATOR + location.getCid();
@@ -335,26 +346,6 @@ public class CollectionData extends Activity {
 		
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-//			if (convertView == null) {
-//				convertView = LayoutInflater.from(mContext).inflate(R.layout.list_item_2, null);
-//			}
-//			
-//			TextView cellView = (TextView) convertView.findViewById(android.R.id.text1);
-//			TextView timeView = (TextView) convertView.findViewById(R.id.time);
-//			
-//			String cellLocation = "";
-//			CellLocationWrapper location = (CellLocationWrapper) getItem(position);
-//			if (location.isGsm()) {
-//				cellLocation = mContext.getResources().getString(R.string.cell_location, location.getLac(), location.getCid(), location.getAsu());
-//			} else {
-//				cellLocation = mContext.getResources().getString(R.string.cell_location_cdma, location.getBaseStationId(), location.getSystemId(), location.getNetworkId());
-//			}
-//			
-//			cellView.setText(cellLocation);
-//			
-//			SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");//yyyy-MM-dd HH:mm:ss
-//			Date date= new Date(location.getTime());  
-//			timeView.setText(formatter.format(date));
 			
 			if (convertView == null) {
 				convertView = LayoutInflater.from(mContext).inflate(R.layout.list_item, null);
@@ -384,6 +375,11 @@ public class CollectionData extends Activity {
 			} else {
 				convertView.setBackgroundColor(mContext.getResources().getColor(R.color.white));
 			}
+			
+			// The first always highlighted.
+			if (position == 0) {
+				convertView.setBackgroundColor(mContext.getResources().getColor(R.color.blue));
+			}
 			return convertView;
 		}
 		
@@ -410,6 +406,26 @@ public class CollectionData extends Activity {
 			}
 			
 		};
+		
+		public void findAndReplace(CellLocationWrapper newLocation) {
+			int count = this.getCount();
+			
+			String key = newLocation.toString();
+			int index = -1;
+			for (int i = 0; i < count; i++) {
+				CellLocationWrapper location = (CellLocationWrapper) getItem(i);
+				
+				if (location.toString().equals(key)) {
+					index = i;
+					break;
+				}
+			}
+			
+			if (index != -1) {
+				mLocation.remove(index);
+				addItem(newLocation);
+			}
+		}
 	}
 	
 	public void showMap(View view) {
