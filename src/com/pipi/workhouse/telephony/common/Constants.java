@@ -23,7 +23,7 @@ public class Constants {
 	public static final String KEY_LATITUDE = "LATITUDE";
 	
 	// Map key.
-	//public static final String MAP_KEY = "98596aaceb832c608063a4e8f865be61"; // release used.
-	public static final String MAP_KEY = "A8d46f967ba4c17f12ca53e7302813d5"; // debug used.
+	public static final String MAP_KEY = "98596aaceb832c608063a4e8f865be61"; // release used.
+	//public static final String MAP_KEY = "A8d46f967ba4c17f12ca53e7302813d5"; // debug used.
 	
 }
