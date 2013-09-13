@@ -14,6 +14,7 @@ import com.baidu.location.LocationClientOption;
 import com.pipi.workhouse.telephony.R;
 import com.pipi.workhouse.telephony.adapter.LocationAdapter;
 import com.pipi.workhouse.telephony.common.Constants;
+import com.pipi.workhouse.telephony.common.MyApplication;
 import com.pipi.workhouse.telephony.utils.CellLocationWrapper;
 import com.pipi.workhouse.telephony.utils.Utils;
 
@@ -141,7 +142,7 @@ public class CollectionData extends Activity {
 		super.onResume();
 		
 		mTelephonyManager.listen(mPhoneStateListener, PhoneStateListener.LISTEN_CELL_LOCATION
-												| PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
+												/*| PhoneStateListener.LISTEN_SIGNAL_STRENGTHS*/);
 		//mTelephonyManager.listen(mPhoneStateListener, PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
 		
 		final IntentFilter filter = new IntentFilter();
@@ -211,6 +212,8 @@ public class CollectionData extends Activity {
 	
 	private int getSignalStrength() {
 		int signal = -1;
+		
+		mLastSigalStrength = ((MyApplication)getApplication()).getSignalStrength();
 		
 		if (mLastSigalStrength != null) {
 			if (mTelephonyManager.getPhoneType() == TelephonyManager.PHONE_TYPE_CDMA) {
