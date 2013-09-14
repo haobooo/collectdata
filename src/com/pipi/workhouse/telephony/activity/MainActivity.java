@@ -54,8 +54,13 @@ public class MainActivity extends Activity {
 	protected void onPause() {
 		super.onPause();
 		
-		mTelephonyManager.listen(mPhoneStateListener, PhoneStateListener.LISTEN_NONE);
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
 		
+		mTelephonyManager.listen(mPhoneStateListener, PhoneStateListener.LISTEN_NONE);
 	}
 	
 	public void goNext(View view) {
