@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.baidu.mapapi.BMapManager;
+import com.baidu.mapapi.map.ItemizedOverlay;
 import com.baidu.mapapi.map.LocationData;
 import com.baidu.mapapi.map.MKEvent;
 import com.baidu.mapapi.map.MapController;
@@ -27,10 +28,14 @@ import com.pipi.workhouse.telephony.common.Constants;
 import com.pipi.workhouse.telephony.common.MyApplication;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 
@@ -43,6 +48,8 @@ public class MapActivity extends Activity {
 	private double longtitude;
 	private double latitude;
 	private GeoPoint mDstGeoPoint = null;
+	private Button popButton;
+	private String mInfo;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -100,13 +107,21 @@ public class MapActivity extends Activity {
 			@Override
 			public void onGetPoiResult(MKPoiResult res, int type, int error) {
 				if (mDstGeoPoint != null) {
-			        MyLocationOverlay myLocationOverlay = new MyLocationOverlay(mMapView);
-					LocationData locData = new LocationData();
-					locData.latitude = latitude;
-					locData.longitude = longtitude;
-					locData.direction = 2.0f;
-					myLocationOverlay.setData(locData);
-					mMapView.getOverlays().add(myLocationOverlay);
+//			        MyLocationOverlay myLocationOverlay = new MyLocationOverlay(mMapView);
+//					LocationData locData = new LocationData();
+//					locData.latitude = latitude;
+//					locData.longitude = longtitude;
+//					locData.direction = 2.0f;
+//					myLocationOverlay.setData(locData);
+//					mMapView.getOverlays().add(myLocationOverlay);
+					
+					OverlayCustom overlayCustom = new OverlayCustom(MapActivity.this, R.drawable.marker, mMapView);
+					List<OverlayItem> overlayItems = new ArrayList<OverlayItem>();
+					OverlayItem item = new OverlayItem(mDstGeoPoint, "", "");
+					overlayItems.add(item);
+					
+					overlayCustom.addItem(overlayItems);
+					mMapView.getOverlays().add(overlayCustom);
 					
 					mMapView.getController().animateTo(mDstGeoPoint);
 					mMapView.refresh();
@@ -143,17 +158,40 @@ public class MapActivity extends Activity {
         });
         
         mSearch.poiSearchNearBy("基站", mDstGeoPoint, 1000);
+        
+        popButton = new Button(this);
+        popButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.pop_background_black));
+        popButton.setTextSize(14);
+        popButton.setTextColor(getResources().getColor(R.color.white));
+        popButton.setGravity(Gravity.LEFT);
 	}
 	
 	private void getDataFromIntent() {
-		longtitude = getIntent().getDoubleExtra(Constants.KEY_LONGTITUDE, -1);
-		latitude = getIntent().getDoubleExtra(Constants.KEY_LATITUDE, -1);
+		Intent intent = getIntent();
+		
+		longtitude = intent.getDoubleExtra(Constants.KEY_LONGTITUDE, -1);
+		latitude = intent.getDoubleExtra(Constants.KEY_LATITUDE, -1);
 		if (Constants.IS_DEBUG) Log.d(TAG, "longtitude=" + longtitude + " ; latitude=" + latitude);
 		
 		if (longtitude != -1 && latitude != -1) {
 			mDstGeoPoint = new GeoPoint((int)(latitude*1e6), (int)(longtitude*1e6));
 		}
 		
+		
+		StringBuilder sb = new StringBuilder();
+		if (intent.getStringExtra(Constants.KEY_CELL_LOCATION_TYPE).equals("GSM")) {
+			sb.append("大区：" + intent.getIntExtra(Constants.KEY_CELL_LOCATION_LAC, -1) + "\n");
+			sb.append("小区：" + intent.getIntExtra(Constants.KEY_CELL_LOCATION_CID, -1) + "\n");
+		} else {
+			sb.append("基站：" + intent.getStringExtra(Constants.KEY_CELL_LOCATION_BSD) + "\n");
+			sb.append("系统：" + intent.getStringExtra(Constants.KEY_CELL_LOCATION_SID) + "\n");
+			sb.append("网络：" + intent.getStringExtra(Constants.KEY_CELL_LOCATION_NID) + "\n");
+		}
+		
+		sb.append("经度：" + longtitude + "\n");
+		sb.append("纬度：" + latitude);
+		
+		mInfo = sb.toString();
 	}
 	
 	public void onBack(View view) {
@@ -184,4 +222,40 @@ public class MapActivity extends Activity {
         }  
         super.onResume();
 	}  
+	
+	private class OverlayCustom extends ItemizedOverlay<OverlayItem> {
+		
+		public OverlayCustom(Context context, int resId, MapView mapView) {
+			super(context.getResources().getDrawable(resId), mapView);
+		}
+		
+		public OverlayCustom(Drawable drawable, MapView mapView) {
+			super(drawable, mapView);
+		}
+		
+		protected boolean onTap(int index) {
+			if (Constants.IS_DEBUG) Log.d(TAG, "[OverlayCustom] onTap()");
+			OverlayItem item = getItem(index);
+			popButton.setText(mInfo);
+			// Generate layout params.
+			MapView.LayoutParams layoutParam  = new MapView.LayoutParams(
+	               MapView.LayoutParams.WRAP_CONTENT,
+	               MapView.LayoutParams.WRAP_CONTENT,
+	               item.getPoint(),
+	               0,
+	               -40,
+	               MapView.LayoutParams.BOTTOM_CENTER);
+			
+			// Add to MapView.
+			mMapView.addView(popButton,layoutParam);
+
+			return true;
+		}
+		
+		@Override
+		public boolean onTap(GeoPoint pt , MapView mMapView){
+			mMapView.removeView(popButton);
+			return false;
+		}
+	}
 }

@@ -21,9 +21,16 @@ public class Constants {
 	// Map related.
 	public static String KEY_LONGTITUDE = "LONGTITUDE";
 	public static final String KEY_LATITUDE = "LATITUDE";
+	public static final String KEY_CELL_LOCATION_TYPE = "CELL_LOCATION_TYPE";
+	public static final String KEY_CELL_LOCATION_LAC = "CELL_LOCATION_LAC";
+	public static final String KEY_CELL_LOCATION_CID = "CELL_LOCATION_CID";
+	public static final String KEY_CELL_LOCATION_BSD = "CELL_LOCATION_BSD";
+	public static final String KEY_CELL_LOCATION_SID = "CELL_LOCATION_SID";
+	public static final String KEY_CELL_LOCATION_NID = "CELL_LOCATION_NID";
 	
 	// Map key.
 	public static final String MAP_KEY = "98596aaceb832c608063a4e8f865be61"; // release used.
-	//public static final String MAP_KEY = "A8d46f967ba4c17f12ca53e7302813d5"; // debug used.
+	//public static final String MAP_KEY = "A8d46f967ba4c17f12ca53e7302813d5"; // debug used home. 
+	//public static final String MAP_KEY = "9c567d6d41414c537e035c2b818ea545"; // debug used at work.
 	
 }

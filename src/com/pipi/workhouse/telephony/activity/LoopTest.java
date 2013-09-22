@@ -28,6 +28,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Environment;
 import android.telephony.CellLocation;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
@@ -306,6 +307,13 @@ public class LoopTest extends Activity {
 	}
 	
 	private String getFileDir() {
-		return this.getExternalCacheDir().getAbsolutePath();
+		//存储路径：mnt/sdcard/collectdata/基站路测
+		String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "collectdata" + File.separator + "基站路测";
+		File file = new File(dirPath);
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+		
+		return dirPath;
 	}
 }

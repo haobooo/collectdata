@@ -436,6 +436,17 @@ public class CollectionData extends Activity {
 		intent.putExtra(Constants.KEY_LONGTITUDE, longitude);
 		intent.putExtra(Constants.KEY_LATITUDE, latitude);
 		
+		if (mLastLocation instanceof GsmCellLocation) {
+			intent.putExtra(Constants.KEY_CELL_LOCATION_TYPE, "GSM");
+			intent.putExtra(Constants.KEY_CELL_LOCATION_LAC, ((GsmCellLocation) mLastLocation).getLac());
+			intent.putExtra(Constants.KEY_CELL_LOCATION_CID, ((GsmCellLocation) mLastLocation).getCid());
+		} else if (mLastLocation instanceof CdmaCellLocation) {
+			intent.putExtra(Constants.KEY_CELL_LOCATION_TYPE, "CDMA");
+			intent.putExtra(Constants.KEY_CELL_LOCATION_BSD, ((CdmaCellLocation) mLastLocation).getBaseStationId());
+			intent.putExtra(Constants.KEY_CELL_LOCATION_SID, ((CdmaCellLocation) mLastLocation).getSystemId());
+			intent.putExtra(Constants.KEY_CELL_LOCATION_NID, ((CdmaCellLocation) mLastLocation).getNetworkId());
+		}
+		
 		startActivity(intent);
 	}
 }

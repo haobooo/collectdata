@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- HISTORY:
+1.0.19:
+基站路测:
+	把采集的数据存储到/sdcard/collectdata/基站采集 目录
+基站采集:
+	地图显示时点击显示详细信息：大区、小区（基站、系统、网络）、经度、纬度
 1.0.18:
 	基站采集列表重复项只显示一条
 1.0.17:
@@ -41,8 +46,8 @@
  -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.pipi.workhouse.telephony"
-    android:versionCode="18"
-    android:versionName="1.0.18" >
+    android:versionCode="19"
+    android:versionName="1.0.19" >
 
     <uses-sdk
         android:minSdkVersion="7"
