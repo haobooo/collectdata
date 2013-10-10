@@ -322,12 +322,12 @@ public class FileManager extends Activity {
 					
 					int len = tmp.length;
 					int asu = -1;
-					long time = 0;
+					String time = null;
 					if (len == 4) {
 						int lac = Integer.parseInt(tmp[0]);
 						int cid = Integer.parseInt(tmp[1]);
 						asu = Integer.parseInt(tmp[2]);
-						time = Long.parseLong(tmp[3]);
+						time = tmp[3];
 						
 						loc = new GsmCellLocation();
 						((GsmCellLocation)loc).setLacAndCid(lac, cid);
@@ -337,7 +337,7 @@ public class FileManager extends Activity {
 						int sid = Integer.parseInt(tmp[1]);
 						int nid = Integer.parseInt(tmp[2]);
 						asu = Integer.parseInt(tmp[3]);
-						time = Long.parseLong(tmp[4]);
+						time = tmp[4];
 						
 						loc = new CdmaCellLocation();
 						((CdmaCellLocation)loc).setCellLocationData(bsd, Integer.MAX_VALUE, Integer.MAX_VALUE, sid, nid);

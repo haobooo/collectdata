@@ -16,6 +16,7 @@ public class CellLocationWrapper extends CellLocation {
 	private int mSignalStrength = -1;
 	private double mLongitude;
 	private double mLatitude;
+	private String updateTimeStr;
 	
 	public CellLocationWrapper(CellLocation location) {
 		mCellLocation = location;
@@ -78,8 +79,16 @@ public class CellLocationWrapper extends CellLocation {
 		updateTime = time;
 	}
 	
+	public void setTime(String time) {
+		updateTimeStr = time;
+	}
+	
 	public long getTime() {
 		return updateTime;
+	}
+	
+	public String getTimeStr() {
+		return updateTimeStr;
 	}
 	
 	public void setLockMode(int lock) {

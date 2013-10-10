@@ -329,6 +329,7 @@ public class CollectionData extends Activity {
 	/**
 	 * 把采集的数据存储到外部存储卡，存储格式如下：
 	 * 	#本数据文件包括'简表'和'详表'，简表只包含'小区信息'，详表除简表信息外还包括'信号强度'和'采集时间'
+	 *  #运营商：中国联通
 	 *  #简表---------------------------
 	 *  #(2143,1234)(GSM制式)，或(11,22,33)(CDMA制式)
 	 *  #......
@@ -362,6 +363,10 @@ public class CollectionData extends Activity {
 			StringBuilder detailBuilder = new StringBuilder();
 			int size = mCollectCell.size();
 			
+			bWriter.write("运营商：" + mOperatorNameView.getText().toString());
+			bWriter.newLine();
+			bWriter.newLine();
+			
 			bWriter.write("简表---------------------------");
 			bWriter.newLine();
 			for (int i = 0; i < size; i++) {
@@ -381,15 +386,22 @@ public class CollectionData extends Activity {
 				}
 			}
 			
+			bWriter.newLine();
 			bWriter.write("详表---------------------------");
 			bWriter.newLine();
+			
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			
 			for (int i = 0; i < size; i++) {
 				CellLocationWrapper location = (CellLocationWrapper) mCollectCell.get(i);
 				
+				Date date= new Date(location.getTime());
+				String time = formatter.format(date);
+				
 				if (location.isGsm()) {
-					key = "(" + location.getLac() + "," + location.getCid() + "," + location.getSignalStrength() + ","+ location.getTime() + ")";
+					key = "(" + location.getLac() + "," + location.getCid() + "," + location.getSignalStrength() + ","+ time + ")";
 				} else {
-					key = "(" + location.getBaseStationId() + "," + location.getSystemId() + "," + location.getNetworkId() + "," + location.getSignalStrength() + ","+ location.getTime() + ")";
+					key = "(" + location.getBaseStationId() + "," + location.getSystemId() + "," + location.getNetworkId() + "," + location.getSignalStrength() + ","+ time + ")";
 				}
 				
 				bWriter.write(key);
