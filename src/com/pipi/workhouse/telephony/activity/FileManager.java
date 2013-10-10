@@ -1,7 +1,11 @@
 package com.pipi.workhouse.telephony.activity;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -13,6 +17,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Environment;
 import android.telephony.CellLocation;
 import android.telephony.cdma.CdmaCellLocation;
 import android.telephony.gsm.GsmCellLocation;
@@ -33,6 +38,8 @@ import com.pipi.workhouse.telephony.utils.CellLocationWrapper;
 public class FileManager extends Activity {
 	private static final String TAG = "FileManager";
 	private static final int REQUEST_SELECT_FILE = 1;
+	private static final int BREIF_SECTION = 1;
+	private static final int DETAIL_SECTION = 2;
 	
 	private TextView fileView;
 	private ListView mListView;
@@ -42,7 +49,7 @@ public class FileManager extends Activity {
 	private FilenameFilter mFileNameFilter = new FilenameFilter() {
 		@Override
 		public boolean accept(File dir, String filename) {
-			String regularExpression = ".*_CELL[.]xml";
+			String regularExpression = ".*";
 			if (Constants.IS_DEBUG) Log.d(TAG, "regularExpression= " + regularExpression);
 			if (Constants.IS_DEBUG) Log.d(TAG, "filename= " + filename);
 			if (filename.matches(regularExpression)) {
@@ -68,6 +75,7 @@ public class FileManager extends Activity {
 			fileView.setText(file);
 			mBriefAdapter.clear();
 			mDetailAdapter.clear();
+			
 		}
 	}
 	
@@ -105,98 +113,102 @@ public class FileManager extends Activity {
 	}
 	
 	private void openBriefCellInfo() {
-		mBriefAdapter.clear();
-		
-		String fileName = getFileName(fileView.getText().toString());
-		SharedPreferences sharedPreferences = getSharedPreferences(fileName, MODE_PRIVATE);
-		
-		String briefCell = sharedPreferences.getString(Constants.BRIEF_CELL_KEY, "");
-		briefCell = briefCell.trim();
-		if (Constants.IS_DEBUG) Log.d(TAG, "briefCell=" + briefCell);
-		if (briefCell.length() > 0) {
-			String[] cells = briefCell.split(";");
-			
-			if (Constants.IS_DEBUG) Log.d(TAG, "cells=" + Arrays.toString(cells));
-			int size = cells.length;
-			for (int i = 0; i < size; i++) {
-				CellLocation loc = null;
-				String cell = cells[i].trim();
-				String[] tmp = cell.split(Constants.DATA_SEPERATOR);
-				
-				if (Constants.IS_DEBUG) Log.d(TAG, "cell=" + cell);
-				if (Constants.IS_DEBUG) Log.d(TAG, "len=" + tmp.length);
-				int len = tmp.length;
-				if (len == 2) {
-					int lac = Integer.parseInt(tmp[0]);
-					int cid = Integer.parseInt(tmp[1]);
-					
-					loc = new GsmCellLocation();
-					((GsmCellLocation)loc).setLacAndCid(lac, cid);
-				} else if (len == 3) {
-					int bsd = Integer.parseInt(tmp[0]);
-					int sid = Integer.parseInt(tmp[1]);
-					int nid = Integer.parseInt(tmp[2]);
-					
-					loc = new CdmaCellLocation();
-					((CdmaCellLocation)loc).setCellLocationData(bsd, Integer.MAX_VALUE, Integer.MAX_VALUE, sid, nid);
-				}
-				
-				CellLocationWrapper location = new CellLocationWrapper(loc);
-				mBriefAdapter.addItem(location);
-			}
-			
-			mListView.setAdapter(mBriefAdapter);
-		}
-		
+//		mBriefAdapter.clear();
+//		
+//		String fileName = getFileName(fileView.getText().toString());
+//		SharedPreferences sharedPreferences = getSharedPreferences(fileName, MODE_PRIVATE);
+//		
+//		String briefCell = sharedPreferences.getString(Constants.BRIEF_CELL_KEY, "");
+//		briefCell = briefCell.trim();
+//		if (Constants.IS_DEBUG) Log.d(TAG, "briefCell=" + briefCell);
+//		if (briefCell.length() > 0) {
+//			String[] cells = briefCell.split(";");
+//			
+//			if (Constants.IS_DEBUG) Log.d(TAG, "cells=" + Arrays.toString(cells));
+//			int size = cells.length;
+//			for (int i = 0; i < size; i++) {
+//				CellLocation loc = null;
+//				String cell = cells[i].trim();
+//				String[] tmp = cell.split(Constants.DATA_SEPERATOR);
+//				
+//				if (Constants.IS_DEBUG) Log.d(TAG, "cell=" + cell);
+//				if (Constants.IS_DEBUG) Log.d(TAG, "len=" + tmp.length);
+//				int len = tmp.length;
+//				if (len == 2) {
+//					int lac = Integer.parseInt(tmp[0]);
+//					int cid = Integer.parseInt(tmp[1]);
+//					
+//					loc = new GsmCellLocation();
+//					((GsmCellLocation)loc).setLacAndCid(lac, cid);
+//				} else if (len == 3) {
+//					int bsd = Integer.parseInt(tmp[0]);
+//					int sid = Integer.parseInt(tmp[1]);
+//					int nid = Integer.parseInt(tmp[2]);
+//					
+//					loc = new CdmaCellLocation();
+//					((CdmaCellLocation)loc).setCellLocationData(bsd, Integer.MAX_VALUE, Integer.MAX_VALUE, sid, nid);
+//				}
+//				
+//				CellLocationWrapper location = new CellLocationWrapper(loc);
+//				mBriefAdapter.addItem(location);
+//			}
+//			
+//			mListView.setAdapter(mBriefAdapter);
+//		}
+		getCellInfoFromFile(fileView.getText().toString());
+		mListView.setAdapter(mBriefAdapter);
 	}
 	
 	private void openDetailCellInfo() {
-		mDetailAdapter.clear();
+//		mDetailAdapter.clear();
+//		
+//		String fileName = getFileName(fileView.getText().toString());
+//		SharedPreferences sharedPreferences = getSharedPreferences(fileName, MODE_PRIVATE);
+//		
+//		String detailCell = sharedPreferences.getString(Constants.DETAIL_CELL_KEY, "");
+//		detailCell = detailCell.trim();
+//		if (detailCell.length() > 0) {
+//			String[] cells = detailCell.split(";");
+//			int size = cells.length;
+//			for (int i = 0; i < size; i++) {
+//				CellLocation loc = null;
+//				String cell = cells[i].trim();
+//				String[] tmp = cell.split(Constants.DATA_SEPERATOR);
+//				
+//				int len = tmp.length;
+//				int asu = -1;
+//				long time = 0;
+//				if (len == 4) {
+//					int lac = Integer.parseInt(tmp[0]);
+//					int cid = Integer.parseInt(tmp[1]);
+//					asu = Integer.parseInt(tmp[2]);
+//					time = Long.parseLong(tmp[3]);
+//					
+//					loc = new GsmCellLocation();
+//					((GsmCellLocation)loc).setLacAndCid(lac, cid);
+//				} else if (len == 5) {
+//					
+//					int bsd = Integer.parseInt(tmp[0]);
+//					int sid = Integer.parseInt(tmp[1]);
+//					int nid = Integer.parseInt(tmp[2]);
+//					asu = Integer.parseInt(tmp[3]);
+//					time = Long.parseLong(tmp[4]);
+//					
+//					loc = new CdmaCellLocation();
+//					((CdmaCellLocation)loc).setCellLocationData(bsd, Integer.MAX_VALUE, Integer.MAX_VALUE, sid, nid);
+//				}
+//				
+//				CellLocationWrapper location = new CellLocationWrapper(loc);
+//				location.setSignalStrength(asu);
+//				location.setTime(time);
+//				mDetailAdapter.addItem(location);
+//			}
+//			
+//			mListView.setAdapter(mDetailAdapter);
+//		}
 		
-		String fileName = getFileName(fileView.getText().toString());
-		SharedPreferences sharedPreferences = getSharedPreferences(fileName, MODE_PRIVATE);
-		
-		String detailCell = sharedPreferences.getString(Constants.DETAIL_CELL_KEY, "");
-		detailCell = detailCell.trim();
-		if (detailCell.length() > 0) {
-			String[] cells = detailCell.split(";");
-			int size = cells.length;
-			for (int i = 0; i < size; i++) {
-				CellLocation loc = null;
-				String cell = cells[i].trim();
-				String[] tmp = cell.split(Constants.DATA_SEPERATOR);
-				
-				int len = tmp.length;
-				int asu = -1;
-				long time = 0;
-				if (len == 4) {
-					int lac = Integer.parseInt(tmp[0]);
-					int cid = Integer.parseInt(tmp[1]);
-					asu = Integer.parseInt(tmp[2]);
-					time = Long.parseLong(tmp[3]);
-					
-					loc = new GsmCellLocation();
-					((GsmCellLocation)loc).setLacAndCid(lac, cid);
-				} else if (len == 5) {
-					
-					int bsd = Integer.parseInt(tmp[0]);
-					int sid = Integer.parseInt(tmp[1]);
-					int nid = Integer.parseInt(tmp[2]);
-					asu = Integer.parseInt(tmp[3]);
-					time = Long.parseLong(tmp[4]);
-					
-					loc = new CdmaCellLocation();
-					((CdmaCellLocation)loc).setCellLocationData(bsd, Integer.MAX_VALUE, Integer.MAX_VALUE, sid, nid);
-				}
-				
-				CellLocationWrapper location = new CellLocationWrapper(loc);
-				location.setSignalStrength(asu);
-				location.setTime(time);
-				mDetailAdapter.addItem(location);
-			}
-			
-			mListView.setAdapter(mDetailAdapter);
-		}
+		getCellInfoFromFile(fileView.getText().toString());
+		mListView.setAdapter(mDetailAdapter);
 	}
 	
 	private void deleteDataFile(String fileName) {
@@ -204,7 +216,7 @@ public class FileManager extends Activity {
 			return;
 		}
 		
-		String fileFullPath = getDirFilePath() + File.separator + fileName;
+		String fileFullPath = getFileDir() + File.separator + fileName;
 		File file = new File(fileFullPath);
 		boolean success = file.delete();
 		
@@ -217,7 +229,7 @@ public class FileManager extends Activity {
 	}
 	
 	private void deleteAllDataFile() {
-		File filesDir = new File(getDirFilePath());
+		File filesDir = new File(getFileDir());
 		if (filesDir.exists() && filesDir.isDirectory()) {
 			File[] filelist = filesDir.listFiles(mFileNameFilter);
 			if (filelist != null) {
@@ -251,6 +263,112 @@ public class FileManager extends Activity {
 		}
 		
 		return fileName;
+	}
+	
+	private void getCellInfoFromFile(String fileName) {
+		mBriefAdapter.clear();
+		mDetailAdapter.clear();
+		
+		String fullName = getFileDir() + File.separator + fileName;
+		
+		try {
+			String line = null;
+			int section = 0;
+			
+			BufferedReader bReader = new BufferedReader(new FileReader(fullName));
+			while((line = bReader.readLine()) != null){
+				if (line.equals("简表---------------------------")) {
+					section = BREIF_SECTION;
+					continue;
+				}
+				
+				if (line.equals("详表---------------------------")) {
+					section = DETAIL_SECTION;
+					continue;
+				}
+				
+				if (section == BREIF_SECTION) {
+					line = line.replace("(", "");
+					line = line.replace(")", "");
+					line = line.trim();
+					
+					CellLocation loc = null;
+					String[] tmp = line.split(",");
+					int len = tmp.length;
+					if (len == 2) {
+						int lac = Integer.parseInt(tmp[0]);
+						int cid = Integer.parseInt(tmp[1]);
+						
+						loc = new GsmCellLocation();
+						((GsmCellLocation)loc).setLacAndCid(lac, cid);
+					} else if (len == 3) {
+						int bsd = Integer.parseInt(tmp[0]);
+						int sid = Integer.parseInt(tmp[1]);
+						int nid = Integer.parseInt(tmp[2]);
+						
+						loc = new CdmaCellLocation();
+						((CdmaCellLocation)loc).setCellLocationData(bsd, Integer.MAX_VALUE, Integer.MAX_VALUE, sid, nid);
+					}
+					
+					CellLocationWrapper location = new CellLocationWrapper(loc);
+					mBriefAdapter.addItem(location);
+				} else if (section == DETAIL_SECTION) {
+					line = line.replace("(", "");
+					line = line.replace(")", "");
+					line = line.trim();
+					
+					CellLocation loc = null;
+					String[] tmp = line.split(",");
+					
+					int len = tmp.length;
+					int asu = -1;
+					long time = 0;
+					if (len == 4) {
+						int lac = Integer.parseInt(tmp[0]);
+						int cid = Integer.parseInt(tmp[1]);
+						asu = Integer.parseInt(tmp[2]);
+						time = Long.parseLong(tmp[3]);
+						
+						loc = new GsmCellLocation();
+						((GsmCellLocation)loc).setLacAndCid(lac, cid);
+					} else if (len == 5) {
+						
+						int bsd = Integer.parseInt(tmp[0]);
+						int sid = Integer.parseInt(tmp[1]);
+						int nid = Integer.parseInt(tmp[2]);
+						asu = Integer.parseInt(tmp[3]);
+						time = Long.parseLong(tmp[4]);
+						
+						loc = new CdmaCellLocation();
+						((CdmaCellLocation)loc).setCellLocationData(bsd, Integer.MAX_VALUE, Integer.MAX_VALUE, sid, nid);
+					}
+					
+					CellLocationWrapper location = new CellLocationWrapper(loc);
+					location.setSignalStrength(asu);
+					location.setTime(time);
+					mDetailAdapter.addItem(location);
+				}
+			}
+			
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private String getFileDir() {
+		//存储路径：mnt/sdcard/collectdata/基站采集
+		String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "collectdata" + File.separator + "基站采集";
+		File file = new File(dirPath);
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+		
+		return dirPath;
 	}
 	
 	private class BriefLocationAdapter extends LocationAdapter {

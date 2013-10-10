@@ -13,6 +13,7 @@ import com.pipi.workhouse.telephony.common.Constants;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +35,7 @@ public class SelectFileActivity extends Activity {
 	private FilenameFilter mFileNameFilter = new FilenameFilter() {
 		@Override
 		public boolean accept(File dir, String filename) {
-			String regularExpression = ".*_CELL[.]xml";
+			String regularExpression = ".*";
 			if (Constants.IS_DEBUG) Log.d(TAG, "regularExpression= " + regularExpression);
 			if (Constants.IS_DEBUG) Log.d(TAG, "filename= " + filename);
 			if (filename.matches(regularExpression)) {
@@ -115,13 +116,13 @@ public class SelectFileActivity extends Activity {
 		List<Map<String, Object>> retListData = mListData;
 		retListData.clear();
 		
-		String tmp = getFilesDir().getAbsolutePath();
-		if (Constants.IS_DEBUG) Log.d(TAG, "tmp=" + tmp);
-		int pos = tmp.lastIndexOf("/");
-		String dir = tmp.substring(0, pos);
-		if (Constants.IS_DEBUG) Log.d(TAG, "dir=" + dir);
+//		String tmp = getFilesDir().getAbsolutePath();
+//		if (Constants.IS_DEBUG) Log.d(TAG, "tmp=" + tmp);
+//		int pos = tmp.lastIndexOf("/");
+//		String dir = tmp.substring(0, pos);
+//		if (Constants.IS_DEBUG) Log.d(TAG, "dir=" + dir);
 		
-		File filesDir = new File(dir, "shared_prefs");
+		File filesDir = new File(getFileDir());
 		if (filesDir.exists() && filesDir.isDirectory()) {
 			String[] filelist = filesDir.list(mFileNameFilter);
 			if (filelist != null) {
@@ -149,5 +150,16 @@ public class SelectFileActivity extends Activity {
 		} else {
 			
 		}
+	}
+	
+	private String getFileDir() {
+		//存储路径：mnt/sdcard/collectdata/基站采集
+		String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "collectdata" + File.separator + "基站采集";
+		File file = new File(dirPath);
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+		
+		return dirPath;
 	}
 }

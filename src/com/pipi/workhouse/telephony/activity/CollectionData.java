@@ -1,6 +1,9 @@
 package com.pipi.workhouse.telephony.activity;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,6 +30,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.os.Environment;
 import android.telephony.CellLocation;
 import android.telephony.PhoneStateListener;
 import android.telephony.SignalStrength;
@@ -259,8 +263,9 @@ public class CollectionData extends Activity {
 					Date date= new Date(System.currentTimeMillis());
 					fileName = formatter.format(date);
 				}
-				fileName += "_CELL";
-				saveCellToFile(fileName);
+				//fileName += "_CELL";
+				//saveCellToFile(fileName);
+				saveCellToFileEx(fileName);
 				
 				dialog.dismiss();
 			}
@@ -319,6 +324,85 @@ public class CollectionData extends Activity {
 		edit.apply();
 		
 		Toast.makeText(this, "Save OK!", Toast.LENGTH_SHORT).show();
+	}
+	
+	/**
+	 * 把采集的数据存储到外部存储卡，存储格式如下：
+	 * 	#本数据文件包括'简表'和'详表'，简表只包含'小区信息'，详表除简表信息外还包括'信号强度'和'采集时间'
+	 *  #简表---------------------------
+	 *  #(2143,1234)(GSM制式)，或(11,22,33)(CDMA制式)
+	 *  #......
+	 *	#详表---------------------------
+	 *	#(2143,1234,15,201333332223)(GSM制式)或(11,22,33,15,2013333333323)(CDMA制式)
+	 * @param fileName
+	 */
+	private void saveCellToFileEx(String fileName) {
+		String fullFileName = getFileDir() + File.separator + fileName;
+		if (Constants.IS_DEBUG) Log.d(TAG, "[saveCellToFileEx] fullFileName=" + fullFileName);
+		
+		try {
+			BufferedWriter bWriter = new BufferedWriter(new FileWriter(new File(fullFileName)));
+			bWriter.write("#本数据文件包括'简表'和'详表'，简表只包含'小区信息'，详表除简表信息外还包括'信号强度'和'采集时间'");
+			bWriter.newLine();
+			bWriter.write("#简表---------------------------");
+			bWriter.newLine();
+			bWriter.write("#(2143,1234)(GSM制式)，或(11,22,33)(CDMA制式)");
+			bWriter.newLine();
+			bWriter.write("#......");
+			bWriter.newLine();
+			bWriter.write("#详表---------------------------");
+			bWriter.newLine();
+			bWriter.write("#(2143,1234,15,201333332223)(GSM制式)或(11,22,33,15,2013333333323)(CDMA制式)");
+			bWriter.newLine();
+			bWriter.newLine();
+			bWriter.newLine();
+			
+			String key, detailCell;
+			StringBuilder briefBuilder = new StringBuilder();
+			StringBuilder detailBuilder = new StringBuilder();
+			int size = mCollectCell.size();
+			
+			bWriter.write("简表---------------------------");
+			bWriter.newLine();
+			for (int i = 0; i < size; i++) {
+				CellLocationWrapper location = (CellLocationWrapper) mCollectCell.get(i);
+				if (location.isGsm()) {
+					key = "(" + location.getLac() + "," + location.getCid() + ")";
+				} else {
+					key = "(" + location.getBaseStationId() + "," + location.getSystemId() + "," + location.getNetworkId() + ")";
+				}
+				
+				if (!briefBuilder.toString().contains(key)) {
+					briefBuilder.append(key);
+					briefBuilder.append("; ");
+					
+					bWriter.write(key);
+					bWriter.newLine();
+				}
+			}
+			
+			bWriter.write("详表---------------------------");
+			bWriter.newLine();
+			for (int i = 0; i < size; i++) {
+				CellLocationWrapper location = (CellLocationWrapper) mCollectCell.get(i);
+				
+				if (location.isGsm()) {
+					key = "(" + location.getLac() + "," + location.getCid() + "," + location.getSignalStrength() + ","+ location.getTime() + ")";
+				} else {
+					key = "(" + location.getBaseStationId() + "," + location.getSystemId() + "," + location.getNetworkId() + "," + location.getSignalStrength() + ","+ location.getTime() + ")";
+				}
+				
+				bWriter.write(key);
+				bWriter.newLine();
+			}
+			
+			bWriter.flush();
+			bWriter.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 	private String getPhoneType(int type) {
@@ -448,5 +532,16 @@ public class CollectionData extends Activity {
 		}
 		
 		startActivity(intent);
+	}
+	
+	private String getFileDir() {
+		//存储路径：mnt/sdcard/collectdata/基站采集
+		String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "collectdata" + File.separator + "基站采集";
+		File file = new File(dirPath);
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+		
+		return dirPath;
 	}
 }
