@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- HISTORY:
+1.0.20:
+基站锁定：
+	根据手机的类型，显示不同的输入区域
+基站采集：
+	把采集数据保存到SD卡上，并对保存的数据格式进行了优化
+基站路侧：
+	把保存的数据格式进行了优化；保存前提示输入用户名
 1.0.19:
 基站路测:
 	把采集的数据存储到/sdcard/collectdata/基站采集 目录
@@ -46,8 +53,8 @@
  -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.pipi.workhouse.telephony"
-    android:versionCode="19"
-    android:versionName="1.0.19" >
+    android:versionCode="20"
+    android:versionName="1.0.20" >
 
     <uses-sdk
         android:minSdkVersion="7"
@@ -98,6 +105,7 @@
         <activity android:name=".activity.LoopTest"/>
         <activity android:name=".activity.MapActivity"
             android:label="@string/loc_and_map_title" />
+        <activity android:name=".activity.HelpActivity" />
         
         <service android:name=".service.StationLockService" />
         

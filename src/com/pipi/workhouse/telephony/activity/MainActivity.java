@@ -88,6 +88,8 @@ public class MainActivity extends Activity {
 		case R.id.bs_location_search:
 			break;
 		case R.id.bs_help:
+			Intent help = new Intent(this, HelpActivity.class);
+			startActivity(help);
 			break;
 		}
 	}
