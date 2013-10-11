@@ -23,6 +23,7 @@ import com.pipi.workhouse.telephony.utils.CellLocationWrapper;
 import com.pipi.workhouse.telephony.utils.Utils;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -38,6 +39,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -170,25 +175,79 @@ public class LoopTest extends Activity {
 	}
 	
 	public void onSaveFile(View v) {
+		View view = LayoutInflater.from(this).inflate(R.layout.save_data_layout, null);
+		final EditText fileEdit = (EditText) view.findViewById(R.id.file_name_edit);
+		Button saveBtn = (Button) view.findViewById(R.id.save);
+		Button cancelBtn = (Button) view.findViewById(R.id.cancel);
+		
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		//builder.setView(view);
+		
+		final AlertDialog dialog = builder.create();
+		dialog.show();
+		
+		
+		dialog.setCanceledOnTouchOutside(false);
+		dialog.getWindow().setContentView(view);
+		dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+		
+		saveBtn.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				String fileName = fileEdit.getText().toString();
+				
+				if (fileName.length() == 0) {
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+					Date date= new Date(System.currentTimeMillis());
+					fileName = formatter.format(date);
+				}
+				//fileName += "_CELL";
+				//saveCellToFile(fileName);
+				saveDataToFile(fileName);
+				
+				dialog.dismiss();
+			}
+			
+		});
+		
+		cancelBtn.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+			
+		});
+		
+	}
+	
+	private void saveDataToFile(String fileName) {
 		FileOutputStream os = null;
 		OutputStreamWriter osWriter = null;
 		try {
-			String filePath = getFileDir() + File.separator + getFileName();
+			String filePath = getFileDir() + File.separator + fileName;
 			if (Constants.IS_DEBUG) Log.d(TAG, "filePath=" + filePath);
 			
 			os = new FileOutputStream(filePath);
 			osWriter = new OutputStreamWriter(os);
 			
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			
 			int size = mAdapter.getCount();
-			String seperator = " ";
+			String seperator = ", ";
 			for (int i = 0; i < size; i++) {
 				String key;
 				CellLocationWrapper location = (CellLocationWrapper) mAdapter.getItem(i);
 				
+				Date date= new Date(location.getTime());
+				String time = formatter.format(date);
+				
 				if (location.isGsm()) {
-					key = location.getLac() + seperator + location.getCid() + seperator + location.getTime() + seperator + location.getLongitude() + seperator + location.getLatitude();
+					key = location.getLac() + seperator + location.getCid() + seperator + time + seperator + location.getLongitude() + seperator + location.getLatitude();
 				} else {
-					key = location.getBaseStationId() + Constants.DATA_SEPERATOR + location.getSystemId() + Constants.DATA_SEPERATOR + location.getNetworkId()+ seperator + location.getTime() + seperator + location.getLongitude() + seperator + location.getLatitude();
+					key = location.getBaseStationId() + seperator + location.getSystemId() + seperator + location.getNetworkId()+ seperator + time + seperator + location.getLongitude() + seperator + location.getLatitude();
 				}
 				
 				key += "\r\n";
@@ -215,9 +274,8 @@ public class LoopTest extends Activity {
 		}
 		
 		Toast.makeText(this, "Save OK", Toast.LENGTH_SHORT).show();
-		mSavePathPromptView.setText(getFileDir() + File.separator + getFileName());
+		mSavePathPromptView.setText(getFileDir() + File.separator + fileName);
 		mSavePathPromptView.setVisibility(View.VISIBLE);
-		
 	}
 	
 	private class MyLocationAdapter extends LocationAdapter {
