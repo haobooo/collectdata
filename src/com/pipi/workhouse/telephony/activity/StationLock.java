@@ -17,6 +17,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.telephony.CellLocation;
+import android.telephony.TelephonyManager;
 import android.telephony.cdma.CdmaCellLocation;
 import android.telephony.gsm.GsmCellLocation;
 import android.text.TextUtils;
@@ -632,6 +633,12 @@ public class StationLock extends Activity {
 			lockOutView = (Switch) view.findViewById(R.id.station_lock_out);
 			alarmVibrateView = (Switch) view.findViewById(R.id.station_lock_alarm_vibrate);
 			alarmRingView = (Switch) view.findViewById(R.id.station_lock_alarm_ring);
+			
+			TelephonyManager telephonyManager = (TelephonyManager)getSystemService(TELEPHONY_SERVICE);
+			if (telephonyManager.getPhoneType() == TelephonyManager.PHONE_TYPE_CDMA) {
+				stationCdmaContainer.setVisibility(View.VISIBLE);
+				stationGsmContainer.setVisibility(View.GONE);
+			}
 			
 		}
 		
