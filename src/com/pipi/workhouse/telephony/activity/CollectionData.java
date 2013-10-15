@@ -138,6 +138,8 @@ public class CollectionData extends Activity {
 		
 		CellLocation.requestLocationUpdate();
 		
+		mLastSigalStrength = ((MyApplication)getApplication()).getSignalStrength();
+		
 		initViews();
 	}
 	
@@ -146,7 +148,7 @@ public class CollectionData extends Activity {
 		super.onResume();
 		
 		mTelephonyManager.listen(mPhoneStateListener, PhoneStateListener.LISTEN_CELL_LOCATION
-												/*| PhoneStateListener.LISTEN_SIGNAL_STRENGTHS*/);
+												| PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
 		//mTelephonyManager.listen(mPhoneStateListener, PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
 		
 		final IntentFilter filter = new IntentFilter();
@@ -217,7 +219,7 @@ public class CollectionData extends Activity {
 	private int getSignalStrength() {
 		int signal = -1;
 		
-		mLastSigalStrength = ((MyApplication)getApplication()).getSignalStrength();
+		//mLastSigalStrength = ((MyApplication)getApplication()).getSignalStrength();
 		
 		if (mLastSigalStrength != null) {
 			if (mTelephonyManager.getPhoneType() == TelephonyManager.PHONE_TYPE_CDMA) {
