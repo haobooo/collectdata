@@ -362,7 +362,7 @@ public class FileManager extends Activity {
 	
 	private String getFileDir() {
 		//存储路径：mnt/sdcard/collectdata/基站采集
-		String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "collectdata" + File.separator + "基站采集";
+		String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "collectdata" + File.separator + getString(R.string.collect_data_dir);
 		File file = new File(dirPath);
 		if (!file.exists()) {
 			file.mkdirs();
@@ -425,9 +425,10 @@ public class FileManager extends Activity {
 			
 			cellView.setText(cellLocation);
 			
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			Date date= new Date(location.getTime());  
-			timeView.setText(formatter.format(date));
+//			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//			Date date= new Date(location.getTime());  
+//			timeView.setText(formatter.format(date));
+			timeView.setText(location.getTimeStr());
 			return convertView;
 		}
 	}
