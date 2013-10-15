@@ -420,7 +420,7 @@ public class FileManager extends Activity {
 			if (location.isGsm()) {
 				cellLocation = mContext.getResources().getString(R.string.cell_location, location.getLac(), location.getCid(), location.getSignalStrength());
 			} else {
-				cellLocation = mContext.getResources().getString(R.string.cell_location_cdma, location.getBaseStationId(), location.getSystemId(), location.getNetworkId());
+				cellLocation = mContext.getResources().getString(R.string.cell_location_cdma, location.getBaseStationId(), location.getSystemId(), location.getNetworkId(), location.getSignalStrength());
 			}
 			
 			cellView.setText(cellLocation);
