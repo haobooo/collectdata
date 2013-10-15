@@ -224,6 +224,11 @@ public class LoopTest extends Activity {
 	}
 	
 	private void saveDataToFile(String fileName) {
+		if (!Constants.isExternalStorageEnabled()) {
+			Toast.makeText(this, getResources().getString(R.string.external_disabled), Toast.LENGTH_LONG).show();
+			return;
+		}
+		
 		FileOutputStream os = null;
 		OutputStreamWriter osWriter = null;
 		try {
@@ -366,7 +371,7 @@ public class LoopTest extends Activity {
 	
 	private String getFileDir() {
 		//存储路径：mnt/sdcard/collectdata/基站路测
-		String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "collectdata" + File.separator + "基站路测";
+		String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "collectdata" + File.separator + getString(R.string.looptest_data_dir);
 		File file = new File(dirPath);
 		if (!file.exists()) {
 			file.mkdirs();

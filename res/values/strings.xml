@@ -82,4 +82,7 @@
     <string name="station_lock_alarm_vibrate">震动提醒</string>
     <string name="station_lock_alarm_ring">声音提醒</string>
     
+    <string name="external_disabled">外置SD卡不可用</string>
+    <string name="looptest_data_dir">基站路测</string>
+    <string name="collect_data_dir">基站采集</string>
 </resources>

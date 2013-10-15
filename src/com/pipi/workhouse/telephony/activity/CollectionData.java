@@ -338,6 +338,11 @@ public class CollectionData extends Activity {
 	 * @param fileName
 	 */
 	private void saveCellToFileEx(String fileName) {
+		if (!Constants.isExternalStorageEnabled()) {
+			Toast.makeText(this, getResources().getString(R.string.external_disabled), Toast.LENGTH_LONG).show();
+			return;
+		}
+		
 		String fullFileName = getFileDir() + File.separator + fileName;
 		if (Constants.IS_DEBUG) Log.d(TAG, "[saveCellToFileEx] fullFileName=" + fullFileName);
 		
@@ -548,7 +553,7 @@ public class CollectionData extends Activity {
 	
 	private String getFileDir() {
 		//存储路径：mnt/sdcard/collectdata/基站采集
-		String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "collectdata" + File.separator + "基站采集";
+		String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "collectdata" + File.separator + getString(R.string.collect_data_dir);
 		File file = new File(dirPath);
 		if (!file.exists()) {
 			file.mkdirs();

@@ -1,5 +1,7 @@
 package com.pipi.workhouse.telephony.common;
 
+import android.os.Environment;
+
 
 public class Constants {
 	public static final boolean IS_DEBUG = true;
@@ -33,4 +35,12 @@ public class Constants {
 	//public static final String MAP_KEY = "A8d46f967ba4c17f12ca53e7302813d5"; // debug used home. 
 	//public static final String MAP_KEY = "9c567d6d41414c537e035c2b818ea545"; // debug used at work.
 	
+	
+	public static boolean isExternalStorageEnabled() {
+		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+			return true;
+		}
+		
+		return false;
+	}
 }
