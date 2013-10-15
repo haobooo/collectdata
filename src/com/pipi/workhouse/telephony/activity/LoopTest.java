@@ -143,14 +143,14 @@ public class LoopTest extends Activity {
 	
 	private void updateLocation(CellLocation location) {
 		Log.d(TAG, "location=" + location);
-		String locationStr = "";
-		if (location instanceof GsmCellLocation) {
-			GsmCellLocation loc = (GsmCellLocation)location;
-			locationStr = this.getResources().getString(R.string.cell_location, loc.getLac(), loc.getCid(), loc.getPsc());
-		} else if (location instanceof CdmaCellLocation) {
-			CdmaCellLocation loc = (CdmaCellLocation)location;
-			locationStr = this.getResources().getString(R.string.cell_location_cdma, loc.getBaseStationId(), loc.getSystemId(), loc.getNetworkId());
-		}
+//		String locationStr = "";
+//		if (location instanceof GsmCellLocation) {
+//			GsmCellLocation loc = (GsmCellLocation)location;
+//			locationStr = this.getResources().getString(R.string.cell_location, loc.getLac(), loc.getCid(), loc.getPsc());
+//		} else if (location instanceof CdmaCellLocation) {
+//			CdmaCellLocation loc = (CdmaCellLocation)location;
+//			locationStr = this.getResources().getString(R.string.cell_location_cdma, loc.getBaseStationId(), loc.getSystemId(), loc.getNetworkId());
+//		}
 		
 		CellLocationWrapper locWrapper = new CellLocationWrapper(location);
 		locWrapper.setLongitude(longitude);
