@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- HISTORY:
+1.0.21:
+a)在保存数据前先判断外置存储卡是否可用
+b)数据管理查看详情时时间不正确的问题解决
+c)解决基站采集界面信号强度更新不及时的问题
+d)注释到不再需要的代码
 1.0.20:
 基站锁定：
 	根据手机的类型，显示不同的输入区域
@@ -53,8 +58,8 @@
  -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.pipi.workhouse.telephony"
-    android:versionCode="20"
-    android:versionName="1.0.20" >
+    android:versionCode="21"
+    android:versionName="1.0.21" >
 
     <uses-sdk
         android:minSdkVersion="7"
