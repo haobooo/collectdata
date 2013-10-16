@@ -325,7 +325,7 @@ public class CollectionData extends Activity {
 		edit.putString(Constants.BRIEF_CELL_KEY, briefBuilder.toString());
 		edit.apply();
 		
-		Toast.makeText(this, "Save OK!", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, getString(R.string.file_saved), Toast.LENGTH_SHORT).show();
 	}
 	
 	/**
@@ -340,10 +340,10 @@ public class CollectionData extends Activity {
 	 * @param fileName
 	 */
 	private void saveCellToFileEx(String fileName) {
-		if (!Constants.isExternalStorageEnabled()) {
-			Toast.makeText(this, getResources().getString(R.string.external_disabled), Toast.LENGTH_LONG).show();
-			return;
-		}
+//		if (!Constants.isExternalStorageEnabled()) {
+//			Toast.makeText(this, getResources().getString(R.string.external_disabled), Toast.LENGTH_LONG).show();
+//			return;
+//		}
 		
 		String fullFileName = getFileDir() + File.separator + fileName;
 		if (Constants.IS_DEBUG) Log.d(TAG, "[saveCellToFileEx] fullFileName=" + fullFileName);
@@ -417,6 +417,8 @@ public class CollectionData extends Activity {
 			
 			bWriter.flush();
 			bWriter.close();
+			
+			Toast.makeText(this, getString(R.string.file_saved), Toast.LENGTH_SHORT).show();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -554,13 +556,25 @@ public class CollectionData extends Activity {
 	}
 	
 	private String getFileDir() {
-		//存储路径：mnt/sdcard/collectdata/基站采集
-		String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "collectdata" + File.separator + getString(R.string.collect_data_dir);
-		File file = new File(dirPath);
-		if (!file.exists()) {
-			file.mkdirs();
+		if (Constants.isExternalStorageEnabled()) {
+			//存储路径：mnt/sdcard/collectdata/基站采集
+			String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "collectdata" + File.separator + getString(R.string.collect_data_dir);
+			
+			File file = new File(dirPath);
+			if (!file.exists()) {
+				file.mkdirs();
+			}
+			
+			return dirPath;
+		} else {
+			String dirPath = this.getFilesDir().getAbsolutePath() + File.separator + getString(R.string.collect_data_dir);
+			
+			File file = new File(dirPath);
+			if (!file.exists()) {
+				file.mkdirs();
+			}
+			
+			return dirPath;
 		}
-		
-		return dirPath;
 	}
 }

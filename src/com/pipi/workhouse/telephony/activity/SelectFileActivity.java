@@ -153,13 +153,24 @@ public class SelectFileActivity extends Activity {
 	}
 	
 	private String getFileDir() {
-		//存储路径：mnt/sdcard/collectdata/基站采集
-		String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "collectdata" + File.separator + "基站采集";
-		File file = new File(dirPath);
-		if (!file.exists()) {
-			file.mkdirs();
+		if (Constants.isExternalStorageEnabled()) {
+			//存储路径：mnt/sdcard/collectdata/基站采集
+			String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "collectdata" + File.separator + getString(R.string.collect_data_dir);
+			File file = new File(dirPath);
+			if (!file.exists()) {
+				file.mkdirs();
+			}
+			
+			return dirPath;
+		} else {
+			String dirPath = this.getFilesDir().getAbsolutePath() + File.separator + getString(R.string.collect_data_dir);
+			
+			File file = new File(dirPath);
+			if (!file.exists()) {
+				file.mkdirs();
+			}
+			
+			return dirPath;
 		}
-		
-		return dirPath;
 	}
 }

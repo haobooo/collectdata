@@ -224,10 +224,10 @@ public class LoopTest extends Activity {
 	}
 	
 	private void saveDataToFile(String fileName) {
-		if (!Constants.isExternalStorageEnabled()) {
-			Toast.makeText(this, getResources().getString(R.string.external_disabled), Toast.LENGTH_LONG).show();
-			return;
-		}
+//		if (!Constants.isExternalStorageEnabled()) {
+//			Toast.makeText(this, getResources().getString(R.string.external_disabled), Toast.LENGTH_LONG).show();
+//			return;
+//		}
 		
 		FileOutputStream os = null;
 		OutputStreamWriter osWriter = null;
@@ -278,9 +278,9 @@ public class LoopTest extends Activity {
 			}
 		}
 		
-		Toast.makeText(this, "Save OK", Toast.LENGTH_SHORT).show();
-		mSavePathPromptView.setText(getFileDir() + File.separator + fileName);
-		mSavePathPromptView.setVisibility(View.VISIBLE);
+		Toast.makeText(this, getString(R.string.file_saved), Toast.LENGTH_SHORT).show();
+		//mSavePathPromptView.setText(getFileDir() + File.separator + fileName);
+		//mSavePathPromptView.setVisibility(View.VISIBLE);
 	}
 	
 	private class MyLocationAdapter extends LocationAdapter {
@@ -370,13 +370,24 @@ public class LoopTest extends Activity {
 	}
 	
 	private String getFileDir() {
-		//存储路径：mnt/sdcard/collectdata/基站路测
-		String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "collectdata" + File.separator + getString(R.string.looptest_data_dir);
-		File file = new File(dirPath);
-		if (!file.exists()) {
-			file.mkdirs();
+		if (Constants.isExternalStorageEnabled()) {
+			//存储路径：mnt/sdcard/collectdata/基站路测
+			String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "collectdata" + File.separator + getString(R.string.looptest_data_dir);
+			File file = new File(dirPath);
+			if (!file.exists()) {
+				file.mkdirs();
+			}
+			
+			return dirPath;
+		} else {
+			String dirPath = this.getFilesDir().getAbsolutePath() + File.separator + getString(R.string.looptest_data_dir);
+			
+			File file = new File(dirPath);
+			if (!file.exists()) {
+				file.mkdirs();
+			}
+			
+			return dirPath;
 		}
-		
-		return dirPath;
 	}
 }

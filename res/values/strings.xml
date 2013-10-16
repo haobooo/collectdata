@@ -85,4 +85,5 @@
     <string name="external_disabled">外置SD卡不可用</string>
     <string name="looptest_data_dir">基站路测</string>
     <string name="collect_data_dir">基站采集</string>
+    <string name="file_saved">文件保存完成!</string>
 </resources>
