@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- HISTORY:
+1.0.22:
+a)如果外置SD卡不存在，则保存到内存
+b)路测信息保存完毕后不在显示保存路径
+c)保存完成的提示修改为中文
 1.0.21:
 a)在保存数据前先判断外置存储卡是否可用
 b)数据管理查看详情时时间不正确的问题解决
@@ -58,8 +62,8 @@ d)注释到不再需要的代码
  -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.pipi.workhouse.telephony"
-    android:versionCode="21"
-    android:versionName="1.0.21" >
+    android:versionCode="22"
+    android:versionName="1.0.22" >
 
     <uses-sdk
         android:minSdkVersion="7"
