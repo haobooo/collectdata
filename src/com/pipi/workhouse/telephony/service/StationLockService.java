@@ -111,7 +111,7 @@ public class StationLockService extends Service {
 	
 	private void AlarmByVibrator() {
 		Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-		if (vibrator == null || !vibrator.hasVibrator()) {
+		if (vibrator == null /*|| !vibrator.hasVibrator()*/) {
             return ;
         }
 		
