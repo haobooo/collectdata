@@ -1,7 +1,9 @@
 package com.pipi.workhouse.telephony.activity;
 
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 
 import org.jraf.android.backport.switchwidget.Switch;
 
@@ -25,12 +27,14 @@ import android.text.method.DigitsKeyListener;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -369,14 +373,16 @@ public class StationLock extends Activity {
 		if (Constants.IS_DEBUG) Log.d(TAG, "[saveLockMode] key=" + key + "; lockMode=" + value + "; alarmMode=" + alarmMode);
 		
 		if (location.getLockMode() == 0) {
-			edit.remove(key);
-			Utils.removePreference(this, Constants.LOCK_ALARM_MODE_FILE, key);
+//			edit.remove(key);
+//			Utils.removePreference(this, Constants.LOCK_ALARM_MODE_FILE, key);
+//			
+//			if (lockCell.contains(key)) {
+//				lockCell.replace(key, "");
+//				
+//				edit.putString(Constants.LOCK_CELL_KEY, lockCell);
+//			}
 			
-			if (lockCell.contains(key)) {
-				lockCell.replace(key, "");
-				
-				edit.putString(Constants.LOCK_CELL_KEY, lockCell);
-			}
+			queryToRemove(location, key);
 		} else {
 			edit.putInt(key, value);
 			
@@ -393,6 +399,60 @@ public class StationLock extends Activity {
 		}
 		
 		edit.apply();
+	}
+	
+	public void queryToRemove(final CellLocationWrapper location, final String key) {
+		View view = LayoutInflater.from(this).inflate(R.layout.query_to_remove_layout, null);
+		Button saveBtn = (Button) view.findViewById(R.id.save);
+		Button cancelBtn = (Button) view.findViewById(R.id.cancel);
+		
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		
+		final AlertDialog dialog = builder.create();
+		dialog.show();
+		
+		
+		dialog.setCanceledOnTouchOutside(false);
+		dialog.getWindow().setContentView(view);
+		dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+		
+		saveBtn.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				SharedPreferences sharedPreferences = getSharedPreferences(Constants.LOCK_MODE_FILE, MODE_PRIVATE);
+				Editor edit = sharedPreferences.edit();
+				String lockCell = sharedPreferences.getString(Constants.LOCK_CELL_KEY, "");
+				
+				edit.remove(key);
+				Utils.removePreference(StationLock.this, Constants.LOCK_ALARM_MODE_FILE, key);
+				
+				if (lockCell.contains(key)) {
+					lockCell.replace(key, "");
+					
+					edit.putString(Constants.LOCK_CELL_KEY, lockCell);
+				}
+				
+				edit.apply();
+				
+				mAdapter.remove(location);
+				
+				dialog.dismiss();
+			}
+			
+		});
+		
+		cancelBtn.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+			
+		});
+		
+		
 	}
 	
 	private class MyLocationAdapter extends LocationAdapter {
@@ -462,6 +522,11 @@ public class StationLock extends Activity {
 			}
 			
 			return convertView;
+		}
+		
+		public void remove(CellLocationWrapper location) {
+			mLocation.remove(location);
+			notifyDataSetChanged();
 		}
 		
 		public void sort() {

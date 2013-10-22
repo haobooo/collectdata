@@ -86,4 +86,7 @@
     <string name="looptest_data_dir">基站路测</string>
     <string name="collect_data_dir">基站采集</string>
     <string name="file_saved">文件保存完成!</string>
+    
+    <string name="remove_promt">确定要把此基站从锁定列表清除吗？</string>
+    <string name="ok">确定</string>
 </resources>
