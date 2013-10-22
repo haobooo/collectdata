@@ -133,16 +133,17 @@ public class StationLockService extends Service {
 		}
 	}
 	private void AlarmByNotification(String message) {
-		Notification.Builder notification = new Notification.Builder(this)
-			.setAutoCancel(true)
-			.setSmallIcon(R.drawable.ic_stat_notify_lock)
-			.setContentTitle(message)
-			.setTicker(message);
-		
-		NotificationManager notificationManager =
-            (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-
-        notificationManager.notify(getNextNotificationId(), notification.getNotification());
+//		Notification.Builder notification = new Notification.Builder(this)
+//			.setAutoCancel(true)
+//			.setSmallIcon(R.drawable.ic_stat_notify_lock)
+//			.setContentTitle(message)
+//			.setTicker(message);
+//		
+//		NotificationManager notificationManager =
+//            (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+//
+//        notificationManager.notify(getNextNotificationId(), notification.getNotification());
+		Toast.makeText(this, message, Toast.LENGTH_LONG).show();
 	}
 	
 	private int getNextNotificationId() {

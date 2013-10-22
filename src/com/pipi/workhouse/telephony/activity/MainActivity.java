@@ -2,6 +2,7 @@ package com.pipi.workhouse.telephony.activity;
 
 import com.pipi.workhouse.telephony.R;
 import com.pipi.workhouse.telephony.common.MyApplication;
+import com.pipi.workhouse.telephony.service.StationLockService;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -61,6 +62,21 @@ public class MainActivity extends Activity {
 		super.onStop();
 		
 		mTelephonyManager.listen(mPhoneStateListener, PhoneStateListener.LISTEN_NONE);
+	}
+	
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		
+		Intent service = new Intent(this, StationLockService.class);
+		stopService(service);
+	}
+	
+	public void onBack(View view) {
+		Intent service = new Intent(this, StationLockService.class);
+		stopService(service);
+		
+		finish();
 	}
 	
 	public void goNext(View view) {
