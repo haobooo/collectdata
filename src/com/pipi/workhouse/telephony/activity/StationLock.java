@@ -167,6 +167,9 @@ public class StationLock extends Activity {
 	}
 	
 	private void restoreCellLock() {
+		//Clear adapter first when restore.
+		mAdapter.clear();
+		
 		SharedPreferences sharedPreferences = getSharedPreferences(Constants.LOCK_MODE_FILE, MODE_PRIVATE);
 		String lockCell = sharedPreferences.getString(Constants.LOCK_CELL_KEY, "");
 		
