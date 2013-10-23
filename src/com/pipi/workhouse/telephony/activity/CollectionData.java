@@ -17,6 +17,7 @@ import com.baidu.location.LocationClientOption;
 import com.pipi.workhouse.telephony.R;
 import com.pipi.workhouse.telephony.adapter.LocationAdapter;
 import com.pipi.workhouse.telephony.common.Constants;
+import com.pipi.workhouse.telephony.common.Constants.onSaveDoneCallback;
 import com.pipi.workhouse.telephony.common.MyApplication;
 import com.pipi.workhouse.telephony.utils.CellLocationWrapper;
 import com.pipi.workhouse.telephony.utils.Utils;
@@ -25,6 +26,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -100,6 +102,15 @@ public class CollectionData extends Activity {
 			CharSequence spn = Utils.getTelephonySpnFrom(intent);
 			mOperatorNameView.setText(Utils.makeCarierString(plmn, spn));
 			mPhoneTypeView.setText(Utils.getNetworkClass(mTelephonyManager.getNetworkType()));
+		}
+    	
+    };
+    
+    private onSaveDoneCallback mOnSaveDone = new onSaveDoneCallback() {
+
+		@Override
+		public void onSaveDone() {
+			finish();
 		}
     	
     };
@@ -233,10 +244,35 @@ public class CollectionData extends Activity {
 	}
 	
 	public void onBack(View v) {
-		finish();
+		//finish();
+		
+//		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//		builder.setTitle(R.string.query_save);
+//		builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+//
+//			public void onClick(DialogInterface dialog, int which) {
+//				dialog.dismiss();
+//				finish();
+//			}
+//		});
+//		
+//		builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+//
+//			public void onClick(DialogInterface dialog, int which) {
+//				queryToSave(mOnSaveDone);
+//			}
+//		});
+//		
+//		builder.create().show();
+		
+		queryToSave(mOnSaveDone);
 	}
 	
 	public void onSaveFile(View v) {
+		queryToSave(null);
+	}
+	
+	private void queryToSave(final onSaveDoneCallback callback) {
 		View view = LayoutInflater.from(this).inflate(R.layout.save_data_layout, null);
 		final EditText fileEdit = (EditText) view.findViewById(R.id.file_name_edit);
 		Button saveBtn = (Button) view.findViewById(R.id.save);
@@ -270,6 +306,10 @@ public class CollectionData extends Activity {
 				saveCellToFileEx(fileName);
 				
 				dialog.dismiss();
+				
+				if (callback != null) {
+					callback.onSaveDone();
+				}
 			}
 			
 		});
@@ -279,11 +319,13 @@ public class CollectionData extends Activity {
 			@Override
 			public void onClick(View v) {
 				dialog.dismiss();
+				
+				if (callback != null) {
+					callback.onSaveDone();
+				}
 			}
 			
 		});
-		
-		
 	}
 	
 	private void saveCellToFile(String fileName) {
@@ -577,4 +619,6 @@ public class CollectionData extends Activity {
 			return dirPath;
 		}
 	}
+	
+	
 }

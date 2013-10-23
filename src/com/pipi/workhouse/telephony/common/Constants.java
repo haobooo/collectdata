@@ -43,4 +43,8 @@ public class Constants {
 		
 		return false;
 	}
+	
+	public static interface onSaveDoneCallback {
+		public void onSaveDone();
+	}
 }

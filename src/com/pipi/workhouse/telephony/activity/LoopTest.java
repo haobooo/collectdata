@@ -19,6 +19,7 @@ import com.baidu.location.LocationClientOption;
 import com.pipi.workhouse.telephony.R;
 import com.pipi.workhouse.telephony.adapter.LocationAdapter;
 import com.pipi.workhouse.telephony.common.Constants;
+import com.pipi.workhouse.telephony.common.Constants.onSaveDoneCallback;
 import com.pipi.workhouse.telephony.utils.CellLocationWrapper;
 import com.pipi.workhouse.telephony.utils.Utils;
 
@@ -101,6 +102,15 @@ public class LoopTest extends Activity {
     	
     };
     
+    private onSaveDoneCallback mOnSaveDone = new onSaveDoneCallback() {
+
+		@Override
+		public void onSaveDone() {
+			finish();
+		}
+    	
+    };
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -171,10 +181,15 @@ public class LoopTest extends Activity {
 	}
 	
 	public void onBack(View v) {
-		finish();
+		//finish();
+		queryToSave(mOnSaveDone);
 	}
 	
 	public void onSaveFile(View v) {
+		queryToSave(null);
+	}
+	
+	private void queryToSave(final onSaveDoneCallback callback) {
 		View view = LayoutInflater.from(this).inflate(R.layout.save_data_layout, null);
 		final EditText fileEdit = (EditText) view.findViewById(R.id.file_name_edit);
 		Button saveBtn = (Button) view.findViewById(R.id.save);
@@ -208,6 +223,10 @@ public class LoopTest extends Activity {
 				saveDataToFile(fileName);
 				
 				dialog.dismiss();
+				
+				if (callback != null) {
+					callback.onSaveDone();
+				}
 			}
 			
 		});
@@ -217,10 +236,13 @@ public class LoopTest extends Activity {
 			@Override
 			public void onClick(View v) {
 				dialog.dismiss();
+				
+				if (callback != null) {
+					callback.onSaveDone();
+				}
 			}
 			
 		});
-		
 	}
 	
 	private void saveDataToFile(String fileName) {
