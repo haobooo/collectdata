@@ -70,8 +70,8 @@ d)注释到不再需要的代码
  -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.pipi.workhouse.telephony"
-    android:versionCode="23"
-    android:versionName="1.0.23" >
+    android:versionCode="24"
+    android:versionName="1.0.24" >
 
     <uses-sdk
         android:minSdkVersion="7"
