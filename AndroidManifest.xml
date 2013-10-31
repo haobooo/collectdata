@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- HISTORY:
+1.0.24:
+a)针对WCDMA制式的手机，锁定服务匹配锁定号码时使用简码而不是全码。
+1.0.23:
+a)不再使用Vibrator.hasVibrator()来判断是否有马达。避免API level11以下平台使用时异常
+b)基站锁定界面在onResume时先清除Adapter，再重新加载数据，避免反复增加重复数据
+c)基站锁定列表删除列表项的功能完善
+d)退出应用后停止服务
+e)基站采集和基站路测退出时提示保存
 1.0.22:
 a)如果外置SD卡不存在，则保存到内存
 b)路测信息保存完毕后不在显示保存路径
@@ -62,8 +70,8 @@ d)注释到不再需要的代码
  -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.pipi.workhouse.telephony"
-    android:versionCode="22"
-    android:versionName="1.0.22" >
+    android:versionCode="23"
+    android:versionName="1.0.23" >
 
     <uses-sdk
         android:minSdkVersion="7"

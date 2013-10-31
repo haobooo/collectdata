@@ -68,7 +68,7 @@ public class StationLockService extends Service {
 		String key = "";
 		if (mCellLocation instanceof GsmCellLocation) {
 			GsmCellLocation loc = (GsmCellLocation)mCellLocation;
-			key = loc.getLac() + "-" + loc.getCid();
+			key = loc.getLac() + "-" + (loc.getCid()&0xFFFF);
 		} else if (mCellLocation instanceof CdmaCellLocation) {
 			CdmaCellLocation loc = (CdmaCellLocation)mCellLocation;
 			key = loc.getBaseStationId() + "-" + loc.getSystemId() + "-" + loc.getNetworkId();
@@ -89,7 +89,7 @@ public class StationLockService extends Service {
 		// In check.
 		if (location instanceof GsmCellLocation) {
 			GsmCellLocation loc = (GsmCellLocation)location;
-			key = loc.getLac() + "-" + loc.getCid();
+			key = loc.getLac() + "-" + (loc.getCid()&0xFFFF);
 		} else if (location instanceof CdmaCellLocation) {
 			CdmaCellLocation loc = (CdmaCellLocation)location;
 			key = loc.getBaseStationId() + "-" + loc.getSystemId() + "-" + loc.getNetworkId();
@@ -110,6 +110,7 @@ public class StationLockService extends Service {
 	}
 	
 	private void AlarmByVibrator() {
+		if (Constants.IS_DEBUG) Log.d(TAG, "[AlarmByVibrator]");
 		Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 		if (vibrator == null /*|| !vibrator.hasVibrator()*/) {
             return ;
@@ -119,11 +120,19 @@ public class StationLockService extends Service {
 	}
 	
 	private void AlarmByRing() {
+		if (Constants.IS_DEBUG) Log.d(TAG, "[Alarm] AlarmByRing");
 		MediaPlayer mp = MediaPlayer.create(this, R.raw.message_female);
-		mp.start();
+		
+		try {
+			mp.start();
+		} catch(Exception e) {
+			if (Constants.IS_DEBUG) Log.d(TAG, "[Alarm] AlarmByRing e=" + e);
+		}
 	}
 	
 	private void Alarm(int mode) {
+		if (Constants.IS_DEBUG) Log.d(TAG, "[Alarm] mode=" + mode);
+		
 		if ((mode & Constants.LOCK_ALARM_MODE_VIB) == Constants.LOCK_ALARM_MODE_VIB) {
 			AlarmByVibrator();
 		}
