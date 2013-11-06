@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- HISTORY:
+1.0.25:
+a)如果基站锁定服务已经启动，在基站锁定的标题栏右侧Checkbox显示选中状态
 1.0.24:
 a)针对WCDMA制式的手机，锁定服务匹配锁定号码时使用简码而不是全码。
 1.0.23:
@@ -70,8 +72,8 @@ d)注释到不再需要的代码
  -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.pipi.workhouse.telephony"
-    android:versionCode="24"
-    android:versionName="1.0.24" >
+    android:versionCode="25"
+    android:versionName="1.0.25" >
 
     <uses-sdk
         android:minSdkVersion="7"

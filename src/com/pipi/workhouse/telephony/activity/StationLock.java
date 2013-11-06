@@ -4,10 +4,12 @@ import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
 import org.jraf.android.backport.switchwidget.Switch;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -85,6 +87,19 @@ public class StationLock extends Activity {
 	private ViewPageIndicator mIndicator;
 	private MyLocationAdapter mAdapter;
 	private int mBase = BASE_DECIMAL;
+	
+	private OnCheckedChangeListener mServiceCheckedListener = new OnCheckedChangeListener() {
+
+		@Override
+		public void onCheckedChanged(CompoundButton view, boolean checked) {
+			if (checked) {
+				AlertStartService();
+			} else {
+				AlertStopService();
+			}
+		}
+		
+	};
 	
 	private RadioGroup.OnCheckedChangeListener mBaseListener = new RadioGroup.OnCheckedChangeListener() {
 
@@ -164,6 +179,12 @@ public class StationLock extends Activity {
 		super.onResume();
 		
 		restoreCellLock();
+		
+		if (isLockServiceStated()) {
+			mStartServiceView.setOnCheckedChangeListener(null);
+			mStartServiceView.setChecked(true);
+			mStartServiceView.setOnCheckedChangeListener(mServiceCheckedListener);
+		}
 	}
 	
 	public void onBack(View view) {
@@ -253,18 +274,25 @@ public class StationLock extends Activity {
 		});
 				
 		mStartServiceView = (CheckBox) findViewById(R.id.title_right_button);
-		mStartServiceView.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-			@Override
-			public void onCheckedChanged(CompoundButton view, boolean checked) {
-				if (checked) {
-					AlertStartService();
-				} else {
-					AlertStopService();
-				}
-			}
-			
-		});
+		mStartServiceView.setOnCheckedChangeListener(mServiceCheckedListener);
+		
+		
+	}
+	
+	private boolean isLockServiceStated() {
+		ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+		List<ActivityManager.RunningServiceInfo> runningList = am.getRunningServices(100);
+		
+		//if (Constants.IS_DEBUG) Log.d(TAG, "service=" + StationLockService.class.getName());
+		String serviceName = StationLockService.class.getName();
+		for (int i = 0; i < runningList.size(); i++) {
+			String clsName = runningList.get(i).service.getClassName();
+			//if (Constants.IS_DEBUG) Log.d(TAG, "clsName=" + clsName);
+			if (clsName.equals(serviceName))
+				return true;
+		}
+		
+		return false;
 	}
 	
 	public void addLock(View view) {
