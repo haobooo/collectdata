@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- HISTORY:
+1.0.26:
+a)地图显示问题。
 1.0.25:
 a)如果基站锁定服务已经启动，在基站锁定的标题栏右侧Checkbox显示选中状态
 1.0.24:
@@ -73,7 +75,7 @@ d)注释到不再需要的代码
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.pipi.workhouse.telephony"
     android:versionCode="25"
-    android:versionName="1.0.25" >
+    android:versionName="1.0.26" >
 
     <uses-sdk
         android:minSdkVersion="7"
